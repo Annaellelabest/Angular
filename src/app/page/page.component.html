@@ -1,0 +1,22 @@
+<div class="container">
+    <div class="container">
+      <h1 class="tex-center">Marvel</h1>
+      <p class="lead tex-center" id="message"></p>
+    </div>
+    <h2>Marvel Comics</h2>
+    <form [formGroup]="searchForm">
+      <input formControlName="search" placeholder="Search.." (input)="onSearchChange()">
+    </form>
+    <div class="flex-container">
+    <ng-container *ngFor="let comic of filteredCharacters">
+        <app-comic [comic]="comic"></app-comic>
+    </ng-container>
+    </div>
+    <div id="message" *ngIf="!marvelData">Loading...</div>
+  </div>
+  <footer class="footer">
+    <div class="container">
+      <span class="text-muted" id="footer">footer</span>
+    </div>
+  </footer>
+  

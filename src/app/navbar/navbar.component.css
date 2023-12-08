@@ -1,0 +1,36 @@
+
+  ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 10px;
+    overflow: hidden;
+    background-color: #d83131; /* Rouge de Marvel */
+  }
+  
+  li {
+    float: left;
+  }
+  
+  li a {
+    display: block;
+    color: #ffffff;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+  }
+  
+  li a:hover {
+    background-color: #333333;
+  }
+  
+  /* Style pour la page d'accueil (Home) */
+  li:first-child a {
+    background-color: #1a1a1a;
+
+  }
+  
+  /* Style pour la page "About" */
+  li:nth-child(4) a {
+    margin-left: 0;
+  }
+  
