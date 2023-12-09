@@ -10,6 +10,15 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { CharactersComponent } from './characters/characters.component';
 import { ComicComponent } from './comic/comic.component';
 import { PageComponent } from './page/page.component';
+import { CharacterDetailComponent } from './character-detail/character-detail.component';
+import { ComicDetailComponent } from './comic-detail/comic-detail.component';
+import { AboutComponent } from './about/about.component';
+import { CreatorPageComponent } from './creator-page/creator-page.component';
+import { CreatorComponent } from './creator/creator.component';
+import { EventComponent } from './event/event.component';
+import { EventPageComponent } from './event-page/event-page.component';
+import { SeriesPageComponent } from './series-page/series-page.component';
+import { SeriesComponent } from './series/series.component';
 
 
 @NgModule({
@@ -19,7 +28,16 @@ import { PageComponent } from './page/page.component';
     MarvelComponent,
     CharactersComponent,
     ComicComponent,
-    PageComponent
+    PageComponent,
+    CharacterDetailComponent,
+    ComicDetailComponent,
+    AboutComponent,
+    CreatorPageComponent,
+    CreatorComponent,
+    EventComponent,
+    EventPageComponent,
+    SeriesPageComponent,
+    SeriesComponent
   ],
   imports: [
     BrowserModule,

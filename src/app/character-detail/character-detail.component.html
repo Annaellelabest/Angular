@@ -1,0 +1,15 @@
+<!-- character-detail.component.html -->
+
+<div *ngIf="selectedCharacter">
+    <h3>{{ selectedCharacter.name }}</h3>
+    <img class="character"[src]="getThumbnailUrl(selectedCharacter)" alt="{{ selectedCharacter.name }} Thumbnail">
+    <p>Description: {{ selectedCharacter.description || 'No description available' }}</p>
+
+    <!-- Display comics  -->
+    <h3>Comics</h3>
+    <ul class="comic">
+        <li *ngFor="let comic of comics">
+            <app-comic [comic]="comic"></app-comic>
+        </li>
+    </ul>
+</div>

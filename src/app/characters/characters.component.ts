@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import {Router}from '@angular/router';
 
 export interface MarvelCharacter {
   thumbnail: {
@@ -17,8 +18,9 @@ export interface MarvelCharacter {
   templateUrl: './characters.component.html',
   styleUrls: ['./characters.component.css']
 })
-export class CharactersComponent {
 
+export class CharactersComponent {
+  constructor(private router: Router) {}
   @Input() character: any | undefined;
 
   getThumbnailUrl(character: MarvelCharacter): string {

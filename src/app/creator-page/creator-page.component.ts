@@ -1,9 +1,10 @@
-// File name: marvel.component.ts
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http'; // Make sure to include this import
+
+
 
 export interface MarvelData {
   attributionHTML: string;
@@ -25,17 +26,17 @@ export interface MarvelCharacter {
 }
 
 @Component({
-  selector: 'app-page',
-  templateUrl: './page.component.html',
-  styleUrls: ['./page.component.css']
+  selector: 'app-creator-page',
+  templateUrl: './creator-page.component.html',
+  styleUrls: ['./creator-page.component.css']
 })
+export class CreatorPageComponent {
 
-export class PageComponent implements OnInit {
-  filteredTitle: MarvelCharacter[] = [];
+  filteredName: MarvelCharacter[] = [];
   marvelData: MarvelData | undefined;
-  private apiUrl = 'http://gateway.marvel.com/v1/public/comics';
+  private apiUrl = 'http://gateway.marvel.com/v1/public/creators';
   private apiKey = 'eff0bf634828b9b11ad00a5c23f96be3';
-  allTitle: MarvelCharacter[] = [];
+  allName: MarvelCharacter[] = [];
   searchForm: FormGroup;
   searchCtrl: FormControl<string>;
 
@@ -50,8 +51,8 @@ export class PageComponent implements OnInit {
     this.getMarvelData().subscribe(
       (data => {
         this.marvelData = data;
-        this.allTitle = data.data.results;
-        this.filteredTitle = this.allTitle;
+        this.allName = data.data.results;
+        this.filteredName = this.allName;
       })
     );
 
@@ -64,9 +65,9 @@ export class PageComponent implements OnInit {
       )
       .subscribe((data: MarvelData) => {
         if (data) {
-          this.filteredTitle = data.data.results;
+          this.filteredName = data.data.results;
         } else {
-          this.filteredTitle = [];
+          this.filteredName = [];
         }
       });
   }
@@ -83,7 +84,7 @@ export class PageComponent implements OnInit {
   }
 
   searchMarvelByName(title: string): Observable<MarvelData> {
-    const url = `https://gateway.marvel.com/v1/public/comics?ts=1&apikey=${this.apiKey}&hash=6243916182e91659aa5ee22aef120b20&titleStartsWith=${title}`;
+    const url = `https://gateway.marvel.com/v1/public/creators?ts=1&apikey=${this.apiKey}&hash=6243916182e91659aa5ee22aef120b20&titleStartsWith=${title}`;
     return this.getMarvelData(url);
   }
 
@@ -95,10 +96,10 @@ export class PageComponent implements OnInit {
     const searchValue = this.searchCtrl.value;
     if (searchValue) {
       this.searchMarvelCharacters(searchValue).subscribe((data: MarvelData) => {
-        this.filteredTitle = data.data.results;
+        this.filteredName = data.data.results;
       });
     } else {
-      this.filteredTitle = this.filteredTitle;
+      this.filteredName = this.filteredName;
     }
   }
 }

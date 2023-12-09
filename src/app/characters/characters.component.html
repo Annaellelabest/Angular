@@ -1,2 +1,4 @@
 <h3>{{ this.character?.name }}</h3>
+<a [routerLink]="['/detail', character?.id]">
 <img [src]="getThumbnailUrl(this.character)" alt="{{ this.character.name }} Thumbnail">
+</a>

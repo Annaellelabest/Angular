@@ -8,7 +8,7 @@
       <input formControlName="search" placeholder="Search.." (input)="onSearchChange()">
     </form>
     <div class="flex-container">
-    <ng-container *ngFor="let comic of filteredCharacters">
+    <ng-container *ngFor="let comic of filteredTitle">
         <app-comic [comic]="comic"></app-comic>
     </ng-container>
     </div>

@@ -1,9 +1,8 @@
-// File name: marvel.component.ts
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
-import { HttpClient } from '@angular/common/http'; // Make sure to include this import
+import { HttpClient } from '@angular/common/http'; 
 
 export interface MarvelData {
   attributionHTML: string;
@@ -25,15 +24,15 @@ export interface MarvelCharacter {
 }
 
 @Component({
-  selector: 'app-page',
-  templateUrl: './page.component.html',
-  styleUrls: ['./page.component.css']
+  selector: 'app-event-page',
+  templateUrl: './event-page.component.html',
+  styleUrls: ['./event-page.component.css']
 })
+export class EventPageComponent implements OnInit {
 
-export class PageComponent implements OnInit {
   filteredTitle: MarvelCharacter[] = [];
   marvelData: MarvelData | undefined;
-  private apiUrl = 'http://gateway.marvel.com/v1/public/comics';
+  private apiUrl = 'http://gateway.marvel.com/v1/public/events';
   private apiKey = 'eff0bf634828b9b11ad00a5c23f96be3';
   allTitle: MarvelCharacter[] = [];
   searchForm: FormGroup;
@@ -83,7 +82,7 @@ export class PageComponent implements OnInit {
   }
 
   searchMarvelByName(title: string): Observable<MarvelData> {
-    const url = `https://gateway.marvel.com/v1/public/comics?ts=1&apikey=${this.apiKey}&hash=6243916182e91659aa5ee22aef120b20&titleStartsWith=${title}`;
+    const url = `https://gateway.marvel.com/v1/public/events?ts=1&apikey=${this.apiKey}&hash=6243916182e91659aa5ee22aef120b20&titleStartsWith=${title}`;
     return this.getMarvelData(url);
   }
 

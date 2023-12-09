@@ -1,4 +1,6 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input} from '@angular/core';
+
+
 
 export interface MarvelCharacter {
   thumbnail: {
@@ -11,7 +13,7 @@ export interface MarvelCharacter {
   title: string;
   description: string;
 }
-export interface Comic {
+export interface Event {
   title: string;
   description: string;
   thumbnail: {
@@ -22,30 +24,30 @@ export interface Comic {
 
 
 @Component({
-  selector: 'app-comic',
-  templateUrl: './comic.component.html',
-  styleUrls: ['./comic.component.css']
+  selector: 'app-event',
+  templateUrl: './event.component.html',
+  styleUrls: ['./event.component.css']
 })
-export class ComicComponent {
+export class EventComponent {
 
-  @Input() comic: any | undefined;
+  @Input() event: any | undefined;
   currentImageIndex: number = 0; // Initialize the index
   @Input() characters: MarvelCharacter[] = [];
-  @Input() comics: Comic[] = [];
+  @Input() events: Event[] = [];
 
 
 
-  getThumbnailUrl(comic: MarvelCharacter): string {
-    return `${comic.thumbnail.path}.${comic.thumbnail.extension}`;
+  getThumbnailUrl(event: MarvelCharacter): string {
+    return `${event.thumbnail.path}.${event.thumbnail.extension}`;
   }
-  shouldDisplayThumbnail(comic: MarvelCharacter): boolean {
-    const thumbnailUrl = this.getThumbnailUrl(comic);
+  shouldDisplayThumbnail(event: MarvelCharacter): boolean {
+    const thumbnailUrl = this.getThumbnailUrl(event);
     return !!thumbnailUrl && !thumbnailUrl.includes('image_not_available.jpg');
   }
 
-  shouldDisplayTitle(comic: MarvelCharacter): boolean {
+  shouldDisplayTitle(event: MarvelCharacter): boolean {
 
-    return !!comic?.title && !comic.title.includes('Example');
+    return !!event?.title && !event.title.includes('Example');
   }
 showNextImage() {
     let nextIndex = (this.currentImageIndex + 1) % this.characters.length;

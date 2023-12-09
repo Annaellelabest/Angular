@@ -1,0 +1,51 @@
+/* character-detail.component.css */
+
+div {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+  
+  h3 {
+    font-size: 24px;
+    margin-bottom: 10px;
+    flex-basis: 100%;
+  }
+  
+  img {
+    max-width: 20%; /* Adjust the width as needed */
+    height: auto;
+    border-radius: 8px;
+    margin-bottom: 20px;
+  }
+  .comic-img{
+    max-width: 10%; 
+    height: auto;
+    border-radius: 50px;
+    margin-bottom: 20px;
+    margin: 10px;
+  }
+  
+  p {
+    font-size: 16px;
+    color: #555;
+    margin: 0; /* Remove margin to align to the top */
+    flex-basis: 45%; /* Adjust the width as needed */
+  }
+  
+  h3 + ul {
+    flex-basis: 100%;
+    margin-top: 20px; 
+    padding-left: 0;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+  
+  li {
+    list-style-type: none;
+    display: inline-block;
+    margin-right: 10px; 
+  }
+  
+  /* Add more styles as needed */
+  

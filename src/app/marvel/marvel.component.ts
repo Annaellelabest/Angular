@@ -31,6 +31,8 @@ export interface MarvelCharacter {
 })
 
 export class MarvelComponent implements OnInit {
+
+
   filteredCharacters: MarvelCharacter[] = [];
   marvelData: MarvelData | undefined;
   private apiUrl = 'http://gateway.marvel.com/v1/public/characters';
@@ -38,6 +40,8 @@ export class MarvelComponent implements OnInit {
   allCharacters: MarvelCharacter[] = [];
   searchForm: FormGroup;
   searchCtrl: FormControl<string>;
+
+ 
 
   constructor(private http: HttpClient, private formBuilder: FormBuilder) {
     this.searchCtrl = new FormControl('', { validators: [Validators.required], nonNullable: true });
