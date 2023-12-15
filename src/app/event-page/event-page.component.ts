@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
-import { HttpClient } from '@angular/common/http'; 
+import { HttpClient } from '@angular/common/http';
 
 export interface MarvelData {
   attributionHTML: string;
@@ -70,14 +70,12 @@ export class EventPageComponent implements OnInit {
       });
   }
 
-
-
-  getMarvelData(url?: string): Observable<MarvelData> {
+  getMarvelData(url?: string, limit: number = 72): Observable<MarvelData> {
     if (url) {
       return this.http.get<MarvelData>(url);
     }
 
-    const apiUrl = `${this.apiUrl}?ts=1&apikey=${this.apiKey}&hash=6243916182e91659aa5ee22aef120b20`;
+    const apiUrl = `${this.apiUrl}?ts=1&apikey=${this.apiKey}&hash=6243916182e91659aa5ee22aef120b20&limit=${limit}`;
     return this.http.get<MarvelData>(apiUrl);
   }
 

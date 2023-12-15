@@ -74,13 +74,11 @@ export class MarvelComponent implements OnInit {
       });
   }
 
-  getMarvelData(url?: string): Observable<MarvelData> {
-    const limit = this.charactersPerPage;
+  getMarvelData(url?: string, limit: number = 72): Observable<MarvelData> {
     const offset = (this.currentPage - 1) * this.charactersPerPage;
 
     let apiUrl = `${this.apiUrl}?ts=1&apikey=${this.apiKey}&hash=6243916182e91659aa5ee22aef120b20&limit=${limit}&offset=${offset}`;
 
-    // Ajoute la logique pour le filtre par lettre
     const searchLetter = this.searchCtrl.value;
     if (searchLetter) {
       apiUrl += `&nameStartsWith=${searchLetter}`;
@@ -89,22 +87,20 @@ export class MarvelComponent implements OnInit {
     return this.http.get<MarvelData>(apiUrl);
   }
 
-  searchMarvelByName(name: string): Observable<MarvelData> {
+  searchMarvelByName(name: string, limit: number = 72): Observable<MarvelData> {
     const offset = (this.currentPage - 1) * this.charactersPerPage;
-    const limit = this.charactersPerPage;
     const url = `https://gateway.marvel.com/v1/public/characters?ts=1&apikey=${this.apiKey}&hash=6243916182e91659aa5ee22aef120b20&limit=${limit}&offset=${offset}&nameStartsWith=${name}`;
-    return this.getMarvelData(url);
+    return this.getMarvelData(url, limit);
   }
 
   searchMarvelCharacters(searchValue: string): Observable<MarvelData> {
     const limit = this.charactersPerPage;
     const offset = (this.currentPage - 1) * this.charactersPerPage;
-    
+
     const url = `${this.apiUrl}?ts=1&apikey=${this.apiKey}&hash=6243916182e91659aa5ee22aef120b20&limit=${limit}&offset=${offset}&nameStartsWith=${searchValue}`;
-    
+
     return this.http.get<MarvelData>(url);
   }
-  
 
   updateFilteredCharacters() {
     const startIdx = (this.currentPage - 1) * this.charactersPerPage;
@@ -112,8 +108,6 @@ export class MarvelComponent implements OnInit {
     this.filteredCharacters = this.allCharacters.slice(startIdx, endIdx);
     console.log('Filtered Characters:', this.filteredCharacters);
   }
-  
-
 
   updateTotalPages() {
     this.totalPages = Math.ceil((this.marvelData?.data?.total || 0) / this.charactersPerPage) || 1;
@@ -136,8 +130,6 @@ export class MarvelComponent implements OnInit {
       });
     }
   }
-  
-  
 
   onPageChange(page: number) {
     this.zone.run(() => {

@@ -91,14 +91,14 @@ export class PageComponent implements OnInit {
     return this.searchMarvelByName(searchValue);
   }
 
-  onSearchChange() {
-    const searchValue = this.searchCtrl.value;
-    if (searchValue) {
-      this.searchMarvelCharacters(searchValue).subscribe((data: MarvelData) => {
-        this.filteredTitle = data.data.results;
-      });
-    } else {
-      this.filteredTitle = this.filteredTitle;
-    }
+onSearchChange() {
+  const searchValue = this.searchCtrl.value;
+  if (searchValue) {
+    this.searchMarvelCharacters(searchValue).subscribe((data: MarvelData) => {
+      this.filteredTitle = data.data.results;
+    });
+  } else {
+    this.filteredTitle = this.allTitle; // Réinitialiser à tous les titres lorsque la recherche est vide
   }
+}
 }

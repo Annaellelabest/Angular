@@ -54,10 +54,9 @@ showNextImage() {
       nextIndex = (nextIndex + 1) % this.characters.length;
     }
 
-    // Update the current index and check if we have an image to display
     this.currentImageIndex = nextIndex;
 
-    // If there's still no valid thumbnail, move to the next image
+
     if (!this.shouldDisplayThumbnail(this.characters[this.currentImageIndex])) {
       this.showNextImage();
     }

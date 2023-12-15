@@ -1,6 +1,4 @@
-import { Component, Input} from '@angular/core';
-
-
+import { Component, Input } from '@angular/core';
 
 export interface MarvelCharacter {
   thumbnail: {
@@ -13,6 +11,7 @@ export interface MarvelCharacter {
   title: string;
   description: string;
 }
+
 export interface Event {
   title: string;
   description: string;
@@ -22,7 +21,6 @@ export interface Event {
   };
 }
 
-
 @Component({
   selector: 'app-event',
   templateUrl: './event.component.html',
@@ -31,39 +29,38 @@ export interface Event {
 export class EventComponent {
 
   @Input() event: any | undefined;
-  currentImageIndex: number = 0; // Initialize the index
+  currentImageIndex: number = 0;
   @Input() characters: MarvelCharacter[] = [];
   @Input() events: Event[] = [];
 
+  charactersPerPage: number = 72; // Adjust the number of characters per page
 
-
-  getThumbnailUrl(event: MarvelCharacter): string {
+  getThumbnailUrl(event: Event): string {
     return `${event.thumbnail.path}.${event.thumbnail.extension}`;
   }
-  shouldDisplayThumbnail(event: MarvelCharacter): boolean {
+
+  shouldDisplayThumbnail(event: Event): boolean {
     const thumbnailUrl = this.getThumbnailUrl(event);
     return !!thumbnailUrl && !thumbnailUrl.includes('image_not_available.jpg');
   }
 
-  shouldDisplayTitle(event: MarvelCharacter): boolean {
-
+  shouldDisplayTitle(event: Event): boolean {
     return !!event?.title && !event.title.includes('Example');
   }
-showNextImage() {
-    let nextIndex = (this.currentImageIndex + 1) % this.characters.length;
 
-    while (nextIndex !== this.currentImageIndex && !this.shouldDisplayThumbnail(this.characters[nextIndex])) {
-      nextIndex = (nextIndex + 1) % this.characters.length;
+  showNextImage() {
+    let nextIndex = (this.currentImageIndex + 1) % this.events.length;
+
+    while (nextIndex !== this.currentImageIndex && !this.shouldDisplayThumbnail(this.events[nextIndex])) {
+      nextIndex = (nextIndex + 1) % this.events.length;
     }
 
     // Update the current index and check if we have an image to display
     this.currentImageIndex = nextIndex;
 
     // If there's still no valid thumbnail, move to the next image
-    if (!this.shouldDisplayThumbnail(this.characters[this.currentImageIndex])) {
+    if (!this.shouldDisplayThumbnail(this.events[this.currentImageIndex])) {
       this.showNextImage();
     }
   }
-
 }
-  

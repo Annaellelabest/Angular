@@ -1,7 +1,7 @@
 <div *ngIf="serie">
-
-    <h3 >{{ serie.fullTitle }}</h3>
+    <h3>{{ serie.fullTitle }}</h3>
     <a [routerLink]="['/comic-detail', serie?.id]">
-    <img [src]="getThumbnailUrl(serie)" alt="{{ serie.title }} Thumbnail" (click)="showNextImage()">
+      <img *ngIf="shouldDisplayThumbnail(serie)" [src]="getThumbnailUrl(serie)" alt="{{ serie.title }} Thumbnail" (click)="showNextImage()">
     </a>
-</div>
+  </div>
+  

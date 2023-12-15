@@ -1,7 +1,7 @@
-<div *ngIf="event">
-
-    <h3 >{{ event.title }}</h3>
+<div *ngIf="event && event.thumbnail && event.thumbnail.path && !event.thumbnail.path.includes('image_not_available')">
+    <h3>{{ event.title }}</h3>
     <a [routerLink]="['/comic-detail', event?.id]">
-    <img [src]="getThumbnailUrl(event)" alt="{{ event.title }} Thumbnail" (click)="showNextImage()">
+      <img [src]="getThumbnailUrl(event)" alt="{{ event.title }} Thumbnail" (click)="showNextImage()">
     </a>
-</div>
+  </div>
+  
