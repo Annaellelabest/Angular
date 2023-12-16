@@ -6,16 +6,13 @@
     <form [formGroup]="searchForm">
       <input formControlName="search" placeholder="Search.." (input)="onSearchChange()">
     </form>
-    <div class="flex-container">
-    <ng-container *ngFor="let serie of filteredTitle">
-        <app-series [serie]="serie"></app-series>
+  <div class="flex-container">
+    <ng-container *ngIf="marvelData; else loading">
+      <ng-container *ngFor="let serie of filteredTitle">
+        <ng-container *ngIf="serie.thumbnail && serie.thumbnail.path && !serie.thumbnail.path.includes('image_not_available')">
+          <app-series [serie]="serie" class="character_image"></app-series>
+        </ng-container>
+      </ng-container>
     </ng-container>
-    </div>
-    <div id="message" *ngIf="!marvelData">Loading...</div>
+    <ng-template #loading>Loading...</ng-template>
   </div>
-  <footer class="footer">
-    <div class="container">
-      <span class="text-muted" id="footer">footer</span>
-    </div>
-  </footer>
-  
