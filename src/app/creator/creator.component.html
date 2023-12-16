@@ -1,7 +1,7 @@
 <div *ngIf="creator">
 
-    <h3 >{{ creator.fullName }}</h3>
-    <a [routerLink]="['/comic-detail', creator?.id]">
-    <img [src]="getThumbnailUrl(creator)" alt="{{ creator.title }} Thumbnail" (click)="showNextImage()">
+   
+    <a [routerLink]="['/creator-detail', creator?.id]">
+        <h3 >{{ creator.fullName }}</h3>
     </a>
 </div>

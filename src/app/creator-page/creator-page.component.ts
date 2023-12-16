@@ -21,7 +21,7 @@ export interface MarvelCharacter {
   urls: {
     url: string;
   }[];
-  title: string;
+  name: string;
   description: string;
 }
 
@@ -83,8 +83,8 @@ export class CreatorPageComponent {
     return this.http.get<MarvelData>(apiUrl);
   }
 
-  searchMarvelByName(title: string): Observable<MarvelData> {
-    const url = `https://gateway.marvel.com/v1/public/creators?ts=1&apikey=${this.apiKey}&hash=6243916182e91659aa5ee22aef120b20&titleStartsWith=${title}`;
+  searchMarvelByName(name: string): Observable<MarvelData> {
+    const url = `https://gateway.marvel.com/v1/public/creators?ts=1&apikey=${this.apiKey}&hash=6243916182e91659aa5ee22aef120b20&nameStartsWith=${name}`;
     return this.getMarvelData(url);
   }
 

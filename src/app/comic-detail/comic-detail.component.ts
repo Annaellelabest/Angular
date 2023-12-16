@@ -27,6 +27,15 @@ export interface character {
   };
 }
 
+
+export interface creator {
+  fullName: string;
+  thumbnail: {
+    path: string;
+    extension: string;
+  };
+}
+
 @Component({
   selector: 'app-comic-detail',
   templateUrl: './comic-detail.component.html',
@@ -36,6 +45,8 @@ export interface character {
 export class ComicDetailComponent implements OnInit {
   selectedComic: MarvelComic| undefined;
   characters: character[] = [];
+  creators: creator[] = [];
+
 
   constructor(private route: ActivatedRoute, private http: HttpClient) {}
 
@@ -45,6 +56,8 @@ export class ComicDetailComponent implements OnInit {
       if (comicId) {
         const comicUrl = `https://gateway.marvel.com/v1/public/comics/${comicId}?ts=1&apikey=eff0bf634828b9b11ad00a5c23f96be3&hash=6243916182e91659aa5ee22aef120b20`;
         const charactersUrl = `https://gateway.marvel.com/v1/public/comics/${comicId}/characters?ts=1&apikey=eff0bf634828b9b11ad00a5c23f96be3&hash=6243916182e91659aa5ee22aef120b20`;
+        const creatorsUrl = `https://gateway.marvel.com/v1/public/comics/${comicId}/creators?ts=1&apikey=eff0bf634828b9b11ad00a5c23f96be3&hash=6243916182e91659aa5ee22aef120b20`;
+       
 
         // Fetch character details
         this.http.get(comicUrl).subscribe(
@@ -65,6 +78,17 @@ export class ComicDetailComponent implements OnInit {
             console.error('Error fetching characters:', error);
           }
         );
+
+        this.http.get(creatorsUrl).subscribe(
+          (creatorsResponse: any) => {
+            this.creators = creatorsResponse.data.results;
+          },
+          error => {
+            console.error('Error fetching characters:', error);
+          }
+        );
+
+  
       }
     });
   }

@@ -12,4 +12,20 @@
             <app-comic [comic]="comic"></app-comic>
         </li>
     </ul>
+     <!-- Display creators  -->
+     <h3>Series</h3>
+     <ul class="comic">
+         <li *ngFor="let serie of series">
+             <app-series [serie]="serie"></app-series>
+         </li>
+     </ul>
+ 
+     <!-- Display comics  -->
+     <h3>Events</h3>
+     <ul class="comic">
+         <li *ngFor="let event of events">
+             <app-event [event]="event"></app-event>
+         </li>
+     </ul>
+ 
 </div>

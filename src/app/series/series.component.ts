@@ -14,7 +14,7 @@ export interface MarvelCharacter {
   description: string;
 }
 export interface Serie {
-  fullTitle: string;
+  title: string;
   thumbnail: {
     path: string;
     extension: string;

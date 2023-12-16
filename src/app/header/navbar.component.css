@@ -1,0 +1,69 @@
+/* styles.css */
+@font-face {
+  font-family: 'Avenger Assemble';
+  src: url('../../assets/AVENGER.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+body {
+  font-family: 'Avenger Assemble', sans-serif;
+}
+
+.navbar-container {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  width: 100%;
+}
+
+.navbar-container ul {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.image-container {
+  text-align: center;
+}
+
+.image-container img {
+  width:30%;
+  height: auto;
+  padding: 0px;
+  border-radius: 4px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  overflow: hidden;
+  background-color: #727272;
+  text-align: center;
+}
+
+li {
+  display: inline-block;
+  margin-right: 100px; /* Increase the margin between li elements */
+}
+
+li a {
+  display: block;
+  color: #ffffff;
+  font-size: 24px; /* Increase the font size */
+  text-align: center;
+  padding: 20px 16px; /* Increase the padding */
+  text-decoration: none;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+li a:hover {
+  background-color: #333333;
+}
+
+.active-link {
+  background-color: black;
+  color: #ffeb3b;
+  border-radius: 4px;
+  transition: background-color 0.3s, color 0.3s;
+}

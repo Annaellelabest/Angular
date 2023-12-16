@@ -82,7 +82,7 @@ export class EventPageComponent implements OnInit {
   }
 
   searchMarvelByName(title: string): Observable<MarvelData> {
-    const url = `https://gateway.marvel.com/v1/public/events?ts=1&apikey=${this.apiKey}&hash=6243916182e91659aa5ee22aef120b20&titleStartsWith=${title}`;
+    const url = `https://gateway.marvel.com/v1/public/events?ts=1&apikey=${this.apiKey}&hash=6243916182e91659aa5ee22aef120b20&nameStartsWith=${title}`;
     return this.getMarvelData(url);
   }
 

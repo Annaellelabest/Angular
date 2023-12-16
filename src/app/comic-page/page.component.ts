@@ -101,4 +101,6 @@ export class PageComponent implements OnInit {
       this.filteredTitle = this.filteredTitle;
     }
   }
+
+  
 }

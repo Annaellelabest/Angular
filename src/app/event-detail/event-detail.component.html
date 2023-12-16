@@ -1,0 +1,33 @@
+<!-- character-detail.component.html -->
+
+<div *ngIf="selectedEvent">
+    <h3>{{ selectedEvent.title }}</h3>
+    <img class="character"[src]="getThumbnailUrl(selectedEvent)" alt="{{ selectedEvent.title }} Thumbnail">
+    <p>Description: {{ selectedEvent.description || 'No description available' }}</p>
+    
+
+    <!-- Display comics  -->
+    <h3>Characters</h3>
+    <ul class="comic">
+        <li *ngFor="let character of characters">
+            <app-characters [character]="character"></app-characters>
+        </li>
+    </ul>
+
+    <!-- Display creators  -->
+    <h3>Creators</h3>
+    <ul class="comic">
+        <li *ngFor="let creator of creators">
+            <app-creator [creator]="creator"></app-creator>
+        </li>
+    </ul>
+
+    <!-- Display comics  -->
+    <h3>Comics</h3>
+    <ul class="comic">
+        <li *ngFor="let comic of comics">
+            <app-comic [comic]="comic"></app-comic>
+        </li>
+    </ul>
+
+</div>
