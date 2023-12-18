@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
-import { MarvelComponent, MarvelData, MarvelCharacter } from './character-page/marvel.component';
+
 
 @Component({
   selector: 'app-root',

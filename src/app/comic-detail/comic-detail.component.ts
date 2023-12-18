@@ -3,38 +3,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
+import { MarvelComic } from '../MarvelComic';
+import { Character } from '../Character';
+import { Creator } from '../Creator';
 
-
-export interface MarvelComic{
-  id: number;
-  title: string;
-  description: string;
-  thumbnail: {
-    path: string;
-    extension: string;
-  };
-  urls: {
-    url: string;
-  }[];
-}
-
-export interface character {
-  name: string;
-  description: string;
-  thumbnail: {
-    path: string;
-    extension: string;
-  };
-}
-
-
-export interface creator {
-  fullName: string;
-  thumbnail: {
-    path: string;
-    extension: string;
-  };
-}
 
 @Component({
   selector: 'app-comic-detail',
@@ -44,8 +16,8 @@ export interface creator {
 
 export class ComicDetailComponent implements OnInit {
   selectedComic: MarvelComic| undefined;
-  characters: character[] = [];
-  creators: creator[] = [];
+  characters: Character[] = [];
+  creators: Creator[] = [];
 
 
   constructor(private route: ActivatedRoute, private http: HttpClient) {}

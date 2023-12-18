@@ -1,46 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
+import { MarvelSeries } from '../MarvelSeries';
+import { Character } from '../Character';
+import { Comic } from '../Comic';
+import { Creator } from '../Creator';
 
-
-export interface MarvelSeries{
-  id: number;
-  title: string;
-  description: string;
-  thumbnail: {
-    path: string;
-    extension: string;
-  };
-  urls: {
-    url: string;
-  }[];
-}
-
-export interface character {
-  name: string;
-  description: string;
-  thumbnail: {
-    path: string;
-    extension: string;
-  };
-}
-
-export interface comic {
-  title: string;
-  description: string;
-  thumbnail: {
-    path: string;
-    extension: string;
-  };
-}
-
-export interface creator {
-  fullName: string;
-  thumbnail: {
-    path: string;
-    extension: string;
-  };
-}
 
 
 @Component({
@@ -51,9 +16,9 @@ export interface creator {
 export class SeriesDetailComponent implements OnInit {
 
   selectedSeries: MarvelSeries| undefined;
-  characters: character[] = [];
-  comics: comic[] = [];
-  creators: creator[] = [];
+  characters: Character[] = [];
+  comics: Comic[] = [];
+  creators: Creator[] = [];
 
   constructor(private route: ActivatedRoute, private http: HttpClient) {}
 

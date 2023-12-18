@@ -1,17 +1,7 @@
 import { Component, Input } from '@angular/core';
 import {Router}from '@angular/router';
+import { MarvelCharacter } from '../MarvelCharacter';
 
-export interface MarvelCharacter {
-  thumbnail: {
-    path: string;
-    extension: string;
-  };
-  urls: {
-    url: string;
-  }[];
-  name: string;
-  description: string;
-}
 
 @Component({
   selector: 'app-characters',

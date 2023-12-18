@@ -1,12 +1,18 @@
 <!-- character-detail.component.html -->
 
 <div *ngIf="selectedSeries">
-    <h3>{{ selectedSeries.title }}</h3>
+    <h2>{{ selectedSeries.title }}</h2>
     <img class="character"[src]="getThumbnailUrl(selectedSeries)" alt="{{ selectedSeries.title }} Thumbnail">
     <p>Description: {{ selectedSeries.description || 'No description available' }}</p>
-    
-
-    <!-- Display comics  -->
+    <div class="overlay">
+        <h3>Creators</h3>
+        <ul class="creator">
+            <li *ngFor="let creator of creators">
+                <app-creator [creator]="creator"></app-creator>
+            </li>
+        </ul>
+    </div>
+  
     <h3>Characters</h3>
     <ul class="comic">
         <li *ngFor="let character of characters">
@@ -14,15 +20,10 @@
         </li>
     </ul>
 
-    <!-- Display creators  -->
-    <h3>Creators</h3>
-    <ul class="comic">
-        <li *ngFor="let creator of creators">
-            <app-creator [creator]="creator"></app-creator>
-        </li>
-    </ul>
 
-    <!-- Display comics  -->
+ 
+
+
     <h3>Comics</h3>
     <ul class="comic">
         <li *ngFor="let comic of comics">

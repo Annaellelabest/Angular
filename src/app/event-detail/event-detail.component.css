@@ -1,51 +1,88 @@
-/* character-detail.component.css */
-
 div {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-  }
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+h2 {
+  font-size: 50px; 
+  text-align: center; 
+  flex-basis: 100%;
+  font-family: 'Bangers', cursive;
+  color: rgb(43, 40, 40);
+  text-align: center; 
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1); 
+  letter-spacing: 3px; 
+}
+h3 {
+  font-size: 30px; 
+
+  flex-basis: 100%;
+  color: rgb(43, 40, 40);
+  text-align: center; 
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1); 
+  letter-spacing: 3px; 
+}
+img {
+  max-width: 25%;
+  margin-left: 2%;
+  height: auto;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  box-shadow: 0px 0px 10px 1px rgba(0,0,0,3);
+}
+
+.comic-img {
+  max-width: 8%; 
+  height: auto;
+  border-radius: 50px;
+  margin-bottom: 20px;
+  margin: 10px;
+}
+
+p {
   
-  h3 {
-    font-size: 24px;
-    margin-bottom: 10px;
-    flex-basis: 100%;
-  }
-  
-  img {
-    max-width: 20%; /* Adjust the width as needed */
-    height: auto;
-    border-radius: 8px;
-    margin-bottom: 20px;
-  }
-  .comic-img{
-    max-width: 10%; 
-    height: auto;
-    border-radius: 50px;
-    margin-bottom: 20px;
-    margin: 10px;
-  }
-  
-  p {
-    font-size: 16px;
-    color: #555;
-    margin: 0; /* Remove margin to align to the top */
-    flex-basis: 45%; /* Adjust the width as needed */
-  }
-  
-  h3 + ul {
-    flex-basis: 100%;
-    margin-top: 20px; 
-    padding-left: 0;
-    overflow-x: auto;
-    white-space: nowrap;
-  }
-  
-  li {
-    list-style-type: none;
-    display: inline-block;
-    margin-right: 10px; 
-  }
-  
-  /* Add more styles as needed */
-  
+  font-size: 20px;
+  color: #555;
+  margin: 0 auto; 
+  flex-basis: 50%; 
+  text-align: center; 
+
+}
+
+
+h3 + ul.comic {
+  flex-basis: 100%;
+  margin-top: 20px;
+  padding-left: 0;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
+li {
+  list-style-type: none;
+  display: inline-block;
+  margin-right: 10px;
+}
+.comic-image img {
+  max-width: 5%; 
+  height: auto;
+  border-radius: 50px;
+  margin-bottom: 20px;
+  margin: 10px;
+}
+.overlay {
+  position: absolute;
+  font-size: 15px;
+  color: #555;
+margin-top: 12%;
+margin-left: 30%;
+
+
+
+}
+
+
+
+
+

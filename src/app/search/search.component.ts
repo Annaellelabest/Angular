@@ -1,36 +1,30 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
-import { HttpClient, HttpParams } from '@angular/common/http'; // Ajouter HttpParams
-import { catchError } from 'rxjs/operators'; 
-import { MarvelCharacter } from '../MarvelCharacter';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { MarvelData } from '../MarvelData';
-import { startWith } from 'rxjs/operators';
-
-
-
-
-
+import { MarvelCharacter } from '../MarvelCharacter';
 
 @Component({
-  selector: 'app-marvel',
-  templateUrl: './marvel.component.html',
-  styleUrls: ['./marvel.component.css']
+  selector: 'app-search',
+  templateUrl: './search.component.html',
+  styleUrls: ['./search.component.css']
 })
+export class SearchComponent implements OnInit{
 
-export class MarvelComponent implements OnInit {
   pageSize: number = 24;
   currentPage: number = 1;
   totalPages: number = 1;
-  allCharacters: MarvelCharacter[] = [];
-  filteredCharacters: MarvelCharacter[] = [];
-  marvelData: MarvelData | undefined;
-  private apiUrl = 'http://gateway.marvel.com/v1/public/characters';
-  private apiKey = 'eff0bf634828b9b11ad00a5c23f96be3';
   searchForm: FormGroup;
   searchCtrl: FormControl<string>;
-  lastSearchValue: string = '';
+
+  allCharacters: MarvelCharacter[] = [];
+  filteredCharacters: MarvelCharacter[] = [];
+  @Input() marvelData: MarvelData | undefined;
+  private apiUrl = 'http://gateway.marvel.com/v1/public/characters';
+  private apiKey = 'eff0bf634828b9b11ad00a5c23f96be3';
+ 
 
   constructor(private http: HttpClient, private formBuilder: FormBuilder) {
     this.searchCtrl = new FormControl('', { validators: [Validators.required], nonNullable: true });
@@ -46,10 +40,9 @@ export class MarvelComponent implements OnInit {
       this.totalPages = Math.ceil(data.data.total / this.pageSize);
       this.updateFilteredCharacters();
     });
-
+  
     this.searchCtrl.valueChanges
       .pipe(
-        startWith(''), 
         debounceTime(300),
         distinctUntilChanged(),
         switchMap(value => this.searchMarvelCharacters(value))
@@ -65,39 +58,38 @@ export class MarvelComponent implements OnInit {
         }
       });
   }
+  
+  searchMarvelCharacters(searchValue: string): Observable<MarvelData> {
+    return this.searchMarvelByName(searchValue);
+  }
+  searchMarvelByName(name: string): Observable<MarvelData> {
+    const params = new HttpParams()
+      .set('ts', '1')
+      .set('apikey', this.apiKey)
+      .set('hash', '6243916182e91659aa5ee22aef120b20')
+      .set('nameStartsWith', name);
 
-  getMarvelData(startIndex: number = 0, endIndex: number = this.pageSize, searchValue: string = ''): Observable<MarvelData> {
-    let params = new HttpParams()
+    return this.http.get<MarvelData>(this.apiUrl, { params });
+  }
+  updateFilteredCharacters() {
+    const startIndex = (this.currentPage - 1) * this.pageSize;
+    const endIndex = startIndex + this.pageSize;
+    this.filteredCharacters = this.allCharacters.slice(startIndex, endIndex);
+  }
+   
+  getMarvelData(startIndex: number = 0, endIndex: number = this.pageSize): Observable<MarvelData> {
+    const params = new HttpParams()
       .set('ts', '1')
       .set('apikey', this.apiKey)
       .set('hash', '6243916182e91659aa5ee22aef120b20')
       .set('offset', startIndex.toString())
       .set('limit', (endIndex - startIndex).toString());
-  
-    if (searchValue) {
-      params = params.set('nameStartsWith', searchValue);
-    }
-  
-    return this.http.get<MarvelData>(this.apiUrl, { params });
-  }
-  searchMarvelByName(name: string): Observable<MarvelData> {
-    let params = new HttpParams()
-      .set('ts', '1')
-      .set('apikey', this.apiKey)
-      .set('hash', '6243916182e91659aa5ee22aef120b20')
-      .set('nameStartsWith', name)
-      .set('limit', this.pageSize.toString());
 
     return this.http.get<MarvelData>(this.apiUrl, { params });
-  }
-
-  searchMarvelCharacters(searchValue: string): Observable<MarvelData> {
-    return this.searchMarvelByName(searchValue);
   }
 
   onSearchChange() {
     const searchValue = this.searchCtrl.value;
-    this.lastSearchValue = searchValue; 
     if (searchValue) {
       this.searchMarvelCharacters(searchValue).subscribe((data: MarvelData) => {
         this.allCharacters = data.data.results;
@@ -110,17 +102,10 @@ export class MarvelComponent implements OnInit {
     }
   }
 
-  updateFilteredCharacters() {
-    const startIndex = (this.currentPage - 1) * this.pageSize;
-    const endIndex = startIndex + this.pageSize;
-    this.filteredCharacters = this.allCharacters.slice(startIndex, endIndex);
-  }
-
   nextPage() {
     if (this.currentPage < this.totalPages) {
       this.currentPage++;
       this.getMarvelDataAndUpdate();
-    
     }
   }
 
@@ -130,11 +115,12 @@ export class MarvelComponent implements OnInit {
       this.getMarvelDataAndUpdate();
     }
   }
+
   getMarvelDataAndUpdate() {
     const startIndex = (this.currentPage - 1) * this.pageSize;
     const endIndex = startIndex + this.pageSize;
 
-    this.getMarvelData(startIndex, endIndex, this.lastSearchValue).subscribe(
+    this.getMarvelData(startIndex, endIndex).subscribe(
       data => {
         this.marvelData = data;
         this.allCharacters = data.data.results;

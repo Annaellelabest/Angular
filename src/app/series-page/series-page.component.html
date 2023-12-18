@@ -3,9 +3,16 @@
       <p class="lead tex-center" id="message"></p>
     </div>
     <h2>Marvel Series</h2>
-    <form [formGroup]="searchForm">
+    <div class="search-and-pagination">
+    <form [formGroup]="searchForm" class="search-form">
       <input formControlName="search" placeholder="Search.." (input)="onSearchChange()">
     </form>
+    <div class="pagination">
+      <button (click)="prevPage()" [disabled]="currentPage === 1">Previous</button>
+      <span>{{ currentPage }} / {{ totalPages }}</span>
+      <button (click)="nextPage()" [disabled]="currentPage === totalPages">Next</button>
+    </div>
+    </div>
   <div class="flex-container">
     <ng-container *ngIf="marvelData; else loading">
       <ng-container *ngFor="let serie of filteredTitle">

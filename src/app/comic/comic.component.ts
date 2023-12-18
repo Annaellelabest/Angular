@@ -1,24 +1,6 @@
 import { Component, Input } from '@angular/core';
-
-export interface MarvelCharacter {
-  thumbnail: {
-    path: string;
-    extension: string;
-  };
-  urls: {
-    url: string;
-  }[];
-  title: string;
-  description: string;
-}
-export interface Comic {
-  title: string;
-  description: string;
-  thumbnail: {
-    path: string;
-    extension: string;
-  };
-}
+import { MarvelComic } from '../MarvelComic';
+import { Comic } from '../Comic';
 
 
 @Component({
@@ -30,20 +12,20 @@ export class ComicComponent {
 
   @Input() comic: any | undefined;
   currentImageIndex: number = 0; // Initialize the index
-  @Input() characters: MarvelCharacter[] = [];
+  @Input() characters: MarvelComic[] = [];
   @Input() comics: Comic[] = [];
 
 
 
-  getThumbnailUrl(comic: MarvelCharacter): string {
+  getThumbnailUrl(comic: MarvelComic): string {
     return `${comic.thumbnail.path}.${comic.thumbnail.extension}`;
   }
-  shouldDisplayThumbnail(comic: MarvelCharacter): boolean {
+  shouldDisplayThumbnail(comic: MarvelComic): boolean {
     const thumbnailUrl = this.getThumbnailUrl(comic);
     return !!thumbnailUrl && !thumbnailUrl.includes('image_not_available.jpg');
   }
 
-  shouldDisplayTitle(comic: MarvelCharacter): boolean {
+  shouldDisplayTitle(comic: MarvelComic): boolean {
 
     return !!comic?.title && !comic.title.includes('Example');
   }

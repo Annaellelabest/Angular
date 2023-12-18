@@ -3,47 +3,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-
-export interface MarvelCharacter {
-  id: number;
-  name: string;
-  description: string;
-  thumbnail: {
-    path: string;
-    extension: string;
-  };
-  urls: {
-    url: string;
-  }[];
-}
-
-export interface Comic {
-  title: string;
-  description: string;
-  thumbnail: {
-    path: string;
-    extension: string;
-  };
-}
-
-export interface Series {
-  title: string;
-  thumbnail: {
-    path: string;
-    extension: string;
-  };
-}
-
-export interface Event {
-  title: string;
-  description: string;
-  thumbnail: {
-    path: string;
-    extension: string;
-  };
-}
-
-
+import { MarvelCharacter } from '../MarvelCharacter';
+import { Comic } from '../Comic';
+import { Series } from '../Series';
 
 
 

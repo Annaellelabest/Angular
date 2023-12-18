@@ -1,26 +1,5 @@
 import { Component, Input} from '@angular/core';
-
-
-
-export interface MarvelCharacter {
-  thumbnail: {
-    path: string;
-    extension: string;
-  };
-  urls: {
-    url: string;
-  }[];
-  title: string;
-  description: string;
-}
-export interface Event {
-  title: string;
-  description: string;
-  thumbnail: {
-    path: string;
-    extension: string;
-  };
-}
+import { MarvelEvent } from '../MarvelEvent';
 
 
 @Component({
@@ -32,20 +11,20 @@ export class EventComponent {
 
   @Input() event: any | undefined;
   currentImageIndex: number = 0; // Initialize the index
-  @Input() characters: MarvelCharacter[] = [];
+  @Input() characters: MarvelEvent[] = [];
   @Input() events: Event[] = [];
 
 
 
-  getThumbnailUrl(event: MarvelCharacter): string {
+  getThumbnailUrl(event: MarvelEvent): string {
     return `${event.thumbnail.path}.${event.thumbnail.extension}`;
   }
-  shouldDisplayThumbnail(event: MarvelCharacter): boolean {
+  shouldDisplayThumbnail(event: MarvelEvent): boolean {
     const thumbnailUrl = this.getThumbnailUrl(event);
     return !!thumbnailUrl && !thumbnailUrl.includes('image_not_available.jpg');
   }
 
-  shouldDisplayTitle(event: MarvelCharacter): boolean {
+  shouldDisplayTitle(event: MarvelEvent): boolean {
 
     return !!event?.title && !event.title.includes('Example');
   }

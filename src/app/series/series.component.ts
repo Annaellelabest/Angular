@@ -1,25 +1,6 @@
 import { Component , Input} from '@angular/core';
-
-
-
-export interface MarvelCharacter {
-  thumbnail: {
-    path: string;
-    extension: string;
-  };
-  urls: {
-    url: string;
-  }[];
-  fullTitle: string;
-  description: string;
-}
-export interface Serie {
-  title: string;
-  thumbnail: {
-    path: string;
-    extension: string;
-  };
-}
+import { MarvelSeries } from '../MarvelSeries';
+import { Series } from '../Series';
 
 
 @Component({
@@ -32,20 +13,20 @@ export class SeriesComponent {
 
   @Input() serie: any | undefined;
   currentImageIndex: number = 0; // Initialize the index
-  @Input() characters: MarvelCharacter[] = [];
-  @Input() series: Serie[] = [];
+  @Input() characters: MarvelSeries[] = [];
+  @Input() series: Series[] = [];
 
 
 
-  getThumbnailUrl(serie: MarvelCharacter): string {
+  getThumbnailUrl(serie: MarvelSeries): string {
     return `${serie.thumbnail.path}.${serie.thumbnail.extension}`;
   }
-  shouldDisplayThumbnail(serie: MarvelCharacter): boolean {
+  shouldDisplayThumbnail(serie: MarvelSeries): boolean {
     const thumbnailUrl = this.getThumbnailUrl(serie);
     return !!thumbnailUrl && !thumbnailUrl.includes('image_not_available.jpg');
   }
 
-  shouldDisplayTitle(serie: MarvelCharacter): boolean {
+  shouldDisplayTitle(serie: MarvelSeries): boolean {
 
     return !!serie?.fullTitle && !serie.fullTitle.includes('Example');
   }

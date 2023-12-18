@@ -1,45 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
+import { MarvelEvent } from '../MarvelEvent';
+import { Character } from '../Character';
+import { Comic } from '../Comic';
+import { Creator } from '../Creator';
 
-export interface MarvelEvent{
-  id: number;
-  title: string;
-  description: string;
-  thumbnail: {
-    path: string;
-    extension: string;
-  };
-  urls: {
-    url: string;
-  }[];
-}
-
-export interface character {
-  name: string;
-  description: string;
-  thumbnail: {
-    path: string;
-    extension: string;
-  };
-}
-
-export interface comic {
-  title: string;
-  description: string;
-  thumbnail: {
-    path: string;
-    extension: string;
-  };
-}
-
-export interface creator {
-  fullName: string;
-  thumbnail: {
-    path: string;
-    extension: string;
-  };
-}
 
 @Component({
   selector: 'app-event-detail',
@@ -49,9 +15,9 @@ export interface creator {
 export class EventDetailComponent implements OnInit {
 
   selectedEvent: MarvelEvent| undefined;
-  characters: character[] = [];
-  comics: comic[] = [];
-  creators: creator[] = [];
+  characters: Character[] = [];
+  comics: Comic[] = [];
+  creators: Creator[] = [];
 
   constructor(private route: ActivatedRoute, private http: HttpClient) {}
 

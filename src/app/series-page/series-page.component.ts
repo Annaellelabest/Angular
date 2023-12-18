@@ -2,27 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
-import { HttpClient } from '@angular/common/http'; 
+import { HttpClient, HttpParams } from '@angular/common/http'; 
+import { MarvelCharacter } from '../MarvelCharacter';
+import { MarvelData } from '../MarvelData';
 
-
-export interface MarvelData {
-  attributionHTML: string;
-  data: {
-    results: MarvelCharacter[];
-  };
-}
-
-export interface MarvelCharacter {
-  thumbnail: {
-    path: string;
-    extension: string;
-  };
-  urls: {
-    url: string;
-  }[];
-  title: string;
-  description: string;
-}
 
 
 @Component({
@@ -31,7 +14,9 @@ export interface MarvelCharacter {
   styleUrls: ['./series-page.component.css']
 })
 export class SeriesPageComponent {
-
+  pageSize: number = 24;
+  currentPage: number = 1;
+  totalPages: number = 1;
   filteredTitle: MarvelCharacter[] = [];
   marvelData: MarvelData | undefined;
   private apiUrl = 'http://gateway.marvel.com/v1/public/series';
@@ -39,6 +24,7 @@ export class SeriesPageComponent {
   allTitle: MarvelCharacter[] = [];
   searchForm: FormGroup;
   searchCtrl: FormControl<string>;
+  lastSearchValue: string = '';
 
   constructor(private http: HttpClient, private formBuilder: FormBuilder) {
     this.searchCtrl = new FormControl('', { validators: [Validators.required], nonNullable: true });
@@ -49,11 +35,15 @@ export class SeriesPageComponent {
 
   ngOnInit(): void {
     this.getMarvelData().subscribe(
-      (data => {
+      data => {
         this.marvelData = data;
         this.allTitle = data.data.results;
-        this.filteredTitle = this.allTitle;
-      })
+        this.totalPages = Math.ceil(data.data.total / this.pageSize);
+        this.updateFilteredCharacters();
+      },
+      error => {
+        console.error('Error fetching Marvel characters:', error);
+      }
     );
 
     // Subscribe to changes in the search input
@@ -74,18 +64,29 @@ export class SeriesPageComponent {
 
 
 
-  getMarvelData(url?: string): Observable<MarvelData> {
-    if (url) {
-      return this.http.get<MarvelData>(url);
+  getMarvelData(startIndex: number = 0, endIndex: number = this.pageSize, searchValue: string = ''): Observable<MarvelData> {
+    let params = new HttpParams()
+      .set('ts', '1')
+      .set('apikey', this.apiKey)
+      .set('hash', '6243916182e91659aa5ee22aef120b20')
+      .set('offset', startIndex.toString())
+      .set('limit', (endIndex - startIndex).toString());
+  
+    if (searchValue) {
+      params = params.set('titleStartsWith', searchValue);
     }
-
-    const apiUrl = `${this.apiUrl}?ts=1&apikey=${this.apiKey}&hash=6243916182e91659aa5ee22aef120b20`;
-    return this.http.get<MarvelData>(apiUrl);
+  
+    return this.http.get<MarvelData>(this.apiUrl, { params });
   }
+  searchMarvelByName(name: string): Observable<MarvelData> {
+    let params = new HttpParams()
+      .set('ts', '1')
+      .set('apikey', this.apiKey)
+      .set('hash', '6243916182e91659aa5ee22aef120b20')
+      .set('titleStartsWith', name)
+      .set('limit', this.pageSize.toString());
 
-  searchMarvelByName(title: string): Observable<MarvelData> {
-    const url = `https://gateway.marvel.com/v1/public/series?ts=1&apikey=${this.apiKey}&hash=6243916182e91659aa5ee22aef120b20&titleStartsWith=${title}`;
-    return this.getMarvelData(url);
+    return this.http.get<MarvelData>(this.apiUrl, { params });
   }
 
   searchMarvelCharacters(searchValue: string): Observable<MarvelData> {
@@ -94,12 +95,64 @@ export class SeriesPageComponent {
 
   onSearchChange() {
     const searchValue = this.searchCtrl.value;
+    this.lastSearchValue = searchValue;
+  
     if (searchValue) {
       this.searchMarvelCharacters(searchValue).subscribe((data: MarvelData) => {
-        this.filteredTitle = data.data.results;
+        this.allTitle = data.data.results;
+        this.totalPages = Math.ceil(data.data.total / this.pageSize);
+        this.currentPage = 1;  // Assurez-vous que la page est réinitialisée à 1
+        this.updateFilteredCharacters();
       });
     } else {
-      this.filteredTitle = this.filteredTitle;
+      this.getMarvelData().subscribe((data: MarvelData) => {
+        this.allTitle = data.data.results;
+        this.totalPages = Math.ceil(data.data.total / this.pageSize);
+        this.currentPage = 1;
+        this.updateFilteredCharacters();
+      });
     }
+  }
+  
+
+  updateFilteredCharacters() {
+    const startIndex = (this.currentPage - 1) * this.pageSize;
+    const endIndex = startIndex + this.pageSize;
+    this.filteredTitle = this.allTitle.slice(startIndex, endIndex);
+  }
+
+  nextPage() {
+    if (this.currentPage < this.totalPages) {
+      this.currentPage++;
+      this.getMarvelDataAndUpdate();
+    
+    }
+  }
+
+  prevPage() {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+      this.getMarvelDataAndUpdate();
+    }
+  }
+  getMarvelDataAndUpdate() {
+    const startIndex = (this.currentPage - 1) * this.pageSize;
+    const endIndex = startIndex + this.pageSize;
+  
+    this.getMarvelData(startIndex, endIndex, this.lastSearchValue).subscribe(
+      data => {
+        this.marvelData = data;
+        const newResults = data.data.results;
+        
+        // Ajoutez les nouveaux résultats à la liste existante
+        this.allTitle = this.allTitle.concat(newResults);
+  
+        this.totalPages = Math.ceil(data.data.total / this.pageSize);
+        this.updateFilteredCharacters();
+      },
+      error => {
+        console.error('Error fetching Marvel characters:', error);
+      }
+    );
   }
 }

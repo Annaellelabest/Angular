@@ -1,7 +1,7 @@
 <!-- character-detail.component.html -->
 
 <div *ngIf="selectedCreator">
-    <h3>{{ selectedCreator.fullName }}</h3>
+    <h2>{{ selectedCreator.fullName }}</h2>
     <img class="character"[src]="getThumbnailUrl(selectedCreator)" alt="{{ selectedCreator.fullName }} Thumbnail">
     <p>Description: {{ selectedCreator.description || 'No description available' }}</p>
     

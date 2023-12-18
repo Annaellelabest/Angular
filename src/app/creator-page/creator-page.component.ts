@@ -2,28 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
-import { HttpClient } from '@angular/common/http'; // Make sure to include this import
-
-
-
-export interface MarvelData {
-  attributionHTML: string;
-  data: {
-    results: MarvelCharacter[];
-  };
-}
-
-export interface MarvelCharacter {
-  thumbnail: {
-    path: string;
-    extension: string;
-  };
-  urls: {
-    url: string;
-  }[];
-  name: string;
-  description: string;
-}
+import { HttpClient } from '@angular/common/http'; 
+import { MarvelCharacter } from '../MarvelCharacter';
+import { MarvelData } from '../MarvelData';
 
 @Component({
   selector: 'app-creator-page',

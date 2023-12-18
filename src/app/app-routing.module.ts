@@ -13,6 +13,7 @@ import { SeriesDetailComponent } from './series-detail/series-detail.component';
 import { CreatorDetailComponent } from './creator-detail/creator-detail.component';
 
 const routes: Routes = [
+  { path: '', pathMatch: 'full', redirectTo: '/marvel' },
   { path: 'marvel', component: MarvelComponent },
   { path: 'page', component: PageComponent },
   { path: 'detail/:id', component: CharacterDetailComponent },

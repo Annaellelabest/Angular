@@ -1,0 +1,118 @@
+
+body {
+    background-image: url('../assets/background.jpg');
+    width: 100%;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .search-and-pagination {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+  }
+  
+  .search-form {
+    flex: 1;
+    margin-right: 10px;
+  }
+  
+  .pagination {
+    display: flex;
+    padding: 1%;
+  }
+  
+  .pagination button {
+    padding: 5%;
+    background-color: #333333;
+    color: white;
+    border: 1px solid white;
+    border-radius: 5px; 
+    cursor: pointer;
+    padding: 7px 15px;
+    font-size: 16px;
+    margin-right: 5px;
+  }
+  
+  .pagination button.active {
+    background-color: red;
+    border: 1px solid red;
+  }
+  
+  
+  
+  .text-center {
+    text-align: center;
+  }
+  
+  .flex-container {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+  .flex-container > * {
+    flex: 1 0 calc(20% - 20px);
+    align-items: center;
+    flex-direction: column;
+    margin: 20px;
+    margin-bottom: 100px;
+  }
+  
+  .character_image {
+    height: 500px;
+    width: 100px;
+  }
+  
+  .pagination button:disabled {
+    opacity: 0.5; 
+    cursor: not-allowed; 
+  }
+
+  .search-form {
+    position: relative;
+    padding-left: 2%;
+  }
+  
+  .search-form input {
+    padding: 0.5%;
+    border: 2px solid red; 
+    border-radius: 5px; 
+    width: 250px; 
+    font-size: 15px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5); 
+  }
+  
+  .search-form::after {
+    content: '\1F50D';
+    font-size: 20px;
+    position: absolute;
+    top: 50%;
+    left: 16%;
+    transform: translateY(-50%);
+  }
+
+  h2 {
+    font-family: 'Bangers', cursive;
+    color: rgb(43, 40, 40);
+    font-size: 50px;
+    text-align: center; 
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1); 
+    transition: transform 0.8s ease-in-out; 
+    letter-spacing: 3px; 
+  }
+  
+  h2:hover {
+    transform: rotate(360deg); 
+  }
+  
+  .pagination span {
+    font-size: 18px; 
+    color: #333; 
+    background-color: #ddd; 
+    padding: 8px 12px;
+    border-radius: 5px; 
+    margin: 0 5px; 
+  }
+  
+ 

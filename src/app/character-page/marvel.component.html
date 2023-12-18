@@ -1,3 +1,4 @@
+<body>
 <div class="container">
   <div class="container">
     <p class="lead tex-center" id="message"></p>
@@ -16,15 +17,21 @@
   <div class="flex-container">
     <ng-container *ngIf="marvelData; else loading">
       <ng-container *ngFor="let character of filteredCharacters">
+    
         <ng-container *ngIf="character.thumbnail && character.thumbnail.path && !character.thumbnail.path.includes('image_not_available')">
+   
           <app-characters [character]="character" class="character_image"></app-characters>
+      
         </ng-container>
+
       </ng-container>
+
     </ng-container>
     <ng-template #loading>Loading...</ng-template>
   </div>
-</div>
 
+</div>
+</body>
 
  
 

@@ -1,23 +1,8 @@
 import { Component,Input } from '@angular/core';
+import { MarvelCreator } from '../MarvelCreator';
+import { Creator } from '../Creator';
 
-export interface MarvelCharacter {
-  thumbnail: {
-    path: string;
-    extension: string;
-  };
-  urls: {
-    url: string;
-  }[];
-  fullName: string;
-  description: string;
-}
-export interface Creator {
-  fullName: string;
-  thumbnail: {
-    path: string;
-    extension: string;
-  };
-}
+
 
 @Component({
   selector: 'app-creator',
@@ -28,20 +13,20 @@ export class CreatorComponent {
 
   @Input() creator: any | undefined;
   currentImageIndex: number = 0; // Initialize the index
-  @Input() characters: MarvelCharacter[] = [];
+  @Input() characters: MarvelCreator[] = [];
   @Input() creators: Creator[] = [];
 
 
 
-  getThumbnailUrl(creator: MarvelCharacter): string {
+  getThumbnailUrl(creator: MarvelCreator): string {
     return `${creator.thumbnail.path}.${creator.thumbnail.extension}`;
   }
-  shouldDisplayThumbnail(creator: MarvelCharacter): boolean {
+  shouldDisplayThumbnail(creator: MarvelCreator): boolean {
     const thumbnailUrl = this.getThumbnailUrl(creator);
     return !!thumbnailUrl && !thumbnailUrl.includes('image_not_available.jpg');
   }
 
-  shouldDisplayTitle(creator: MarvelCharacter): boolean {
+  shouldDisplayTitle(creator: MarvelCreator): boolean {
 
     return !!creator?.fullName && !creator.fullName.includes('Example');
   }

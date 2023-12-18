@@ -22,6 +22,8 @@ import { SeriesComponent } from './series/series.component';
 import { EventDetailComponent } from './event-detail/event-detail.component';
 import { SeriesDetailComponent } from './series-detail/series-detail.component';
 import { CreatorDetailComponent } from './creator-detail/creator-detail.component';
+import { BackgroundComponent } from './background/background.component';
+import { SearchComponent } from './search/search.component';
 
 
 @NgModule({
@@ -43,7 +45,9 @@ import { CreatorDetailComponent } from './creator-detail/creator-detail.componen
     SeriesComponent,
     EventDetailComponent,
     SeriesDetailComponent,
-    CreatorDetailComponent
+    CreatorDetailComponent,
+    BackgroundComponent,
+    SearchComponent
   ],
   imports: [
     BrowserModule,
