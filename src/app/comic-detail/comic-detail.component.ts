@@ -6,6 +6,7 @@ import { HttpClient } from '@angular/common/http';
 import { MarvelComic } from '../MarvelComic';
 import { Character } from '../Character';
 import { Creator } from '../Creator';
+import { VariablesGlobales } from '../variablesGlobale';
 
 
 @Component({
@@ -20,15 +21,15 @@ export class ComicDetailComponent implements OnInit {
   creators: Creator[] = [];
 
 
-  constructor(private route: ActivatedRoute, private http: HttpClient) {}
+  constructor(private route: ActivatedRoute, private http: HttpClient, private Global: VariablesGlobales) {}
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
       const comicId = params.get('id');
       if (comicId) {
-        const comicUrl = `https://gateway.marvel.com/v1/public/comics/${comicId}?ts=1&apikey=eff0bf634828b9b11ad00a5c23f96be3&hash=6243916182e91659aa5ee22aef120b20`;
-        const charactersUrl = `https://gateway.marvel.com/v1/public/comics/${comicId}/characters?ts=1&apikey=eff0bf634828b9b11ad00a5c23f96be3&hash=6243916182e91659aa5ee22aef120b20`;
-        const creatorsUrl = `https://gateway.marvel.com/v1/public/comics/${comicId}/creators?ts=1&apikey=eff0bf634828b9b11ad00a5c23f96be3&hash=6243916182e91659aa5ee22aef120b20`;
+        const comicUrl = this.Global.apiUrl+`/comics/${comicId}?ts=1&apikey=${this.Global.apiKey}&hash=${this.Global.hash}`;
+        const charactersUrl = this.Global.apiUrl+`/comics/${comicId}/characters?ts=1&apikey=${this.Global.apiKey}&hash=${this.Global.hash}`;
+        const creatorsUrl = this.Global.apiUrl+`/comics/${comicId}/creators?ts=1&apikey=${this.Global.apiKey}&hash=${this.Global.hash}`;
        
 
         // Fetch character details

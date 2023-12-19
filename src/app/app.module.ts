@@ -24,6 +24,7 @@ import { SeriesDetailComponent } from './series-detail/series-detail.component';
 import { CreatorDetailComponent } from './creator-detail/creator-detail.component';
 import { BackgroundComponent } from './background/background.component';
 import { SearchComponent } from './search/search.component';
+import { FooterComponent } from './footer/footer.component';
 
 
 @NgModule({
@@ -47,7 +48,8 @@ import { SearchComponent } from './search/search.component';
     SeriesDetailComponent,
     CreatorDetailComponent,
     BackgroundComponent,
-    SearchComponent
+    SearchComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,

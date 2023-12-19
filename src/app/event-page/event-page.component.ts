@@ -2,10 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
-import { HttpClient, HttpParams } from '@angular/common/http'; 
-import { MarvelEvent } from '../MarvelEvent';
 import { MarvelData } from '../MarvelData';
 import { MarvelCharacter } from '../MarvelCharacter';
+import { MarvelDataService } from '../data.services';
 
 
 
@@ -20,14 +19,12 @@ export class EventPageComponent implements OnInit {
   totalPages: number = 1;
   filteredTitle: MarvelCharacter[] = [];
   marvelData: MarvelData | undefined;
-  private apiUrl = 'http://gateway.marvel.com/v1/public/events';
-  private apiKey = 'eff0bf634828b9b11ad00a5c23f96be3';
   allTitle: MarvelCharacter[] = [];
   searchForm: FormGroup;
   searchCtrl: FormControl<string>;
   lastSearchValue: string = '';
 
-  constructor(private http: HttpClient, private formBuilder: FormBuilder) {
+  constructor(private formBuilder: FormBuilder, private dataService: MarvelDataService) {
     this.searchCtrl = new FormControl('', { validators: [Validators.required], nonNullable: true });
     this.searchForm = this.formBuilder.group({
       search: this.searchCtrl,
@@ -35,7 +32,7 @@ export class EventPageComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getMarvelData().subscribe(
+    this.dataService.getMarvelDataEvent().subscribe(
       data => {
         this.marvelData = data;
         this.allTitle = data.data.results;
@@ -66,34 +63,8 @@ export class EventPageComponent implements OnInit {
 
 
 
-  getMarvelData(startIndex: number = 0, endIndex: number = this.pageSize, searchValue: string = ''): Observable<MarvelData> {
-    let params = new HttpParams()
-      .set('ts', '1')
-      .set('apikey', this.apiKey)
-      .set('hash', '6243916182e91659aa5ee22aef120b20')
-      .set('offset', startIndex.toString())
-      .set('limit', (endIndex - startIndex).toString());
-  
-    if (searchValue) {
-      params = params.set('nameStartsWith', searchValue);
-    }
-  
-    return this.http.get<MarvelData>(this.apiUrl, { params });
-  }
-
-
-  searchMarvelByName(name: string): Observable<MarvelData> {
-    let params = new HttpParams()
-      .set('ts', '1')
-      .set('apikey', this.apiKey)
-      .set('hash', '6243916182e91659aa5ee22aef120b20')
-      .set('nameStartsWith', name)
-      .set('limit', this.pageSize.toString());
-
-    return this.http.get<MarvelData>(this.apiUrl, { params });
-  }
   searchMarvelCharacters(searchValue: string): Observable<MarvelData> {
-    return this.searchMarvelByName(searchValue);
+    return this.dataService.searchMarvelByNameEvent(searchValue);
   }
 
   onSearchChange() {
@@ -108,7 +79,7 @@ export class EventPageComponent implements OnInit {
         this.updateFilteredCharacters();
       });
     } else {
-      this.getMarvelData().subscribe((data: MarvelData) => {
+      this.dataService.getMarvelDataEvent().subscribe((data: MarvelData) => {
         this.allTitle = data.data.results;
         this.totalPages = Math.ceil(data.data.total / this.pageSize);
         this.currentPage = 1;
@@ -141,7 +112,7 @@ export class EventPageComponent implements OnInit {
     const startIndex = (this.currentPage - 1) * this.pageSize;
     const endIndex = startIndex + this.pageSize;
   
-    this.getMarvelData(startIndex, endIndex, this.lastSearchValue).subscribe(
+    this.dataService.getMarvelDataEvent(startIndex, endIndex, this.lastSearchValue).subscribe(
       data => {
         this.marvelData = data;
         const newResults = data.data.results;

@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { MarvelCreator } from '../MarvelCreator';
 import { Character } from '../Character';
 import { Comic } from '../Comic';
+import { VariablesGlobales } from '../variablesGlobale';
 
 
 @Component({
@@ -18,18 +19,18 @@ export class CreatorDetailComponent implements OnInit {
   comics: Comic[] = [];
   events: Event[] = [];
 
-  constructor(private route: ActivatedRoute, private http: HttpClient) {}
+  constructor(private route: ActivatedRoute, private http: HttpClient, private Global: VariablesGlobales) {}
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
       const creatorId = params.get('id');
       if (creatorId) {
-        const eventUrl = `https://gateway.marvel.com/v1/public/creators/${creatorId}?ts=1&apikey=eff0bf634828b9b11ad00a5c23f96be3&hash=6243916182e91659aa5ee22aef120b20`;
-        const charactersUrl = `https://gateway.marvel.com/v1/public/creators/${creatorId}/characters?ts=1&apikey=eff0bf634828b9b11ad00a5c23f96be3&hash=6243916182e91659aa5ee22aef120b20`;
-        const comicsUrl = `https://gateway.marvel.com/v1/public/creators/${creatorId}/comics?ts=1&apikey=eff0bf634828b9b11ad00a5c23f96be3&hash=6243916182e91659aa5ee22aef120b20`;
-        const eventsUrl = `https://gateway.marvel.com/v1/public/creators/${creatorId}/series?ts=1&apikey=eff0bf634828b9b11ad00a5c23f96be3&hash=6243916182e91659aa5ee22aef120b20`;
+        const eventUrl = this.Global.apiUrl+`/creators/${creatorId}?ts=1&apikey=${this.Global.apiKey}&hash=${this.Global.hash}`;
+        const charactersUrl = this.Global.apiUrl+`/creators/${creatorId}/characters?ts=1&apikey=${this.Global.apiKey}&hash=${this.Global.hash}`;
+        const comicsUrl = this.Global.apiUrl+`/creators/${creatorId}/comics?ts=1&apikey=${this.Global.apiKey}&hash=${this.Global.hash}`;
+        const eventsUrl = this.Global.apiUrl+`/creators/${creatorId}/series?ts=1&apikey=${this.Global.apiKey}&hash=${this.Global.hash}`;
 
-        // Fetch character details
+
         this.http.get(eventUrl).subscribe(
           (creatorResponse: any) => {
             this.selectedCreator = creatorResponse.data.results[0];
@@ -39,7 +40,7 @@ export class CreatorDetailComponent implements OnInit {
           }
         );
 
-        // Fetch comics for the character
+
         this.http.get(charactersUrl).subscribe(
           (charactersResponse: any) => {
             this.characters = charactersResponse.data.results;
@@ -49,7 +50,7 @@ export class CreatorDetailComponent implements OnInit {
           }
         );
 
-        // Fetch comics for the character
+   
         this.http.get(comicsUrl).subscribe(
           (comicsResponse: any) => {
             this.comics = comicsResponse.data.results;

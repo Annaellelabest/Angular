@@ -1,0 +1,19 @@
+.footer-container {
+    background-color: #727272;
+    color: #ffffff;
+    text-align: center;
+    padding: 20px;
+    width: auto;
+    margin-top: auto; 
+  }
+  
+  .footer-container a {
+    color: #ff8a8a;
+    text-decoration: none;
+    margin: 20Px;
+  }
+  
+  .footer-container a:hover {
+    text-decoration: underline;
+  }
+  

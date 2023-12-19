@@ -5,6 +5,7 @@ import { MarvelEvent } from '../MarvelEvent';
 import { Character } from '../Character';
 import { Comic } from '../Comic';
 import { Creator } from '../Creator';
+import { VariablesGlobales } from '../variablesGlobale';
 
 
 @Component({
@@ -19,18 +20,18 @@ export class EventDetailComponent implements OnInit {
   comics: Comic[] = [];
   creators: Creator[] = [];
 
-  constructor(private route: ActivatedRoute, private http: HttpClient) {}
+  constructor(private route: ActivatedRoute, private http: HttpClient, private Global:VariablesGlobales) {}
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
       const eventId = params.get('id');
       if (eventId) {
-        const eventUrl = `https://gateway.marvel.com/v1/public/events/${eventId}?ts=1&apikey=eff0bf634828b9b11ad00a5c23f96be3&hash=6243916182e91659aa5ee22aef120b20`;
-        const charactersUrl = `https://gateway.marvel.com/v1/public/events/${eventId}/characters?ts=1&apikey=eff0bf634828b9b11ad00a5c23f96be3&hash=6243916182e91659aa5ee22aef120b20`;
-        const comicsUrl = `https://gateway.marvel.com/v1/public/events/${eventId}/comics?ts=1&apikey=eff0bf634828b9b11ad00a5c23f96be3&hash=6243916182e91659aa5ee22aef120b20`;
-        const creatorsUrl = `https://gateway.marvel.com/v1/public/events/${eventId}/creators?ts=1&apikey=eff0bf634828b9b11ad00a5c23f96be3&hash=6243916182e91659aa5ee22aef120b20`;
+        const eventUrl = this.Global.apiUrl+`/events/${eventId}?ts=1&apikey=${this.Global.apiKey}&hash=${this.Global.hash}`;
+        const charactersUrl = this.Global.apiUrl+`/events/${eventId}/characters?ts=1&apikey=${this.Global.apiKey}&hash=${this.Global.hash}`;
+        const comicsUrl = this.Global.apiUrl+`/events/${eventId}/comics?ts=1&apikey=${this.Global.apiKey}&hash=${this.Global.hash}`;
+        const creatorsUrl = this.Global.apiUrl+`/events/${eventId}/creators?ts=1&apikey=${this.Global.apiKey}&hash=${this.Global.hash}`;
 
-        // Fetch character details
+      
         this.http.get(eventUrl).subscribe(
           (eventResponse: any) => {
             this.selectedEvent = eventResponse.data.results[0];
@@ -40,7 +41,7 @@ export class EventDetailComponent implements OnInit {
           }
         );
 
-        // Fetch comics for the character
+
         this.http.get(charactersUrl).subscribe(
           (charactersResponse: any) => {
             this.characters = charactersResponse.data.results;
@@ -50,7 +51,7 @@ export class EventDetailComponent implements OnInit {
           }
         );
 
-        // Fetch comics for the character
+  
         this.http.get(comicsUrl).subscribe(
           (comicsResponse: any) => {
             this.comics = comicsResponse.data.results;
@@ -60,7 +61,7 @@ export class EventDetailComponent implements OnInit {
           }
         );
 
-        // Fetch creator for the character
+
         this.http.get(creatorsUrl).subscribe(
           (creatorsResponse: any) => {
             this.creators = creatorsResponse.data.results;

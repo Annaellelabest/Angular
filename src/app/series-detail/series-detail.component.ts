@@ -5,6 +5,7 @@ import { MarvelSeries } from '../MarvelSeries';
 import { Character } from '../Character';
 import { Comic } from '../Comic';
 import { Creator } from '../Creator';
+import { VariablesGlobales } from '../variablesGlobale';
 
 
 
@@ -20,16 +21,16 @@ export class SeriesDetailComponent implements OnInit {
   comics: Comic[] = [];
   creators: Creator[] = [];
 
-  constructor(private route: ActivatedRoute, private http: HttpClient) {}
+  constructor(private route: ActivatedRoute, private http: HttpClient, private Global: VariablesGlobales) {}
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
       const seriesId = params.get('id');
       if (seriesId) {
-        const seriesUrl = `https://gateway.marvel.com/v1/public/series/${seriesId}?ts=1&apikey=eff0bf634828b9b11ad00a5c23f96be3&hash=6243916182e91659aa5ee22aef120b20`;
-        const charactersUrl = `https://gateway.marvel.com/v1/public/series/${seriesId}/characters?ts=1&apikey=eff0bf634828b9b11ad00a5c23f96be3&hash=6243916182e91659aa5ee22aef120b20`;
-        const comicsUrl = `https://gateway.marvel.com/v1/public/series/${seriesId}/comics?ts=1&apikey=eff0bf634828b9b11ad00a5c23f96be3&hash=6243916182e91659aa5ee22aef120b20`;
-        const creatorsUrl = `https://gateway.marvel.com/v1/public/series/${seriesId}/creators?ts=1&apikey=eff0bf634828b9b11ad00a5c23f96be3&hash=6243916182e91659aa5ee22aef120b20`;
+        const seriesUrl = this.Global.apiUrl+`/series/${seriesId}?ts=1&apikey=${this.Global.apiKey}&hash=${this.Global.hash}`;
+        const charactersUrl = this.Global.apiUrl+`/series/${seriesId}/characters?ts=1&apikey=${this.Global.apiKey}&hash=${this.Global.hash}`;
+        const comicsUrl = this.Global.apiUrl+`/series/${seriesId}/comics?ts=1&apikey=${this.Global.apiKey}&hash=${this.Global.hash}`;
+        const creatorsUrl = this.Global.apiUrl+`/series/${seriesId}/creators?ts=1&apikey=${this.Global.apiKey}&hash=${this.Global.hash}`;
 
         // Fetch character details
         this.http.get(seriesUrl).subscribe(

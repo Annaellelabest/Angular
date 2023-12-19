@@ -1,11 +1,10 @@
-// character-detail.component.ts
-
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { MarvelCharacter } from '../MarvelCharacter';
 import { Comic } from '../Comic';
 import { Series } from '../Series';
+import { VariablesGlobales } from '../variablesGlobale';
 
 
 
@@ -21,18 +20,18 @@ export class CharacterDetailComponent implements OnInit {
   series: Series[] = [];
   events: Event[] = [];
 
-  constructor(private route: ActivatedRoute, private http: HttpClient) {}
+  constructor(private route: ActivatedRoute, private http: HttpClient, private Global: VariablesGlobales) {}
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
       const characterId = params.get('id');
       if (characterId) {
-        const characterUrl = `https://gateway.marvel.com/v1/public/characters/${characterId}?ts=1&apikey=eff0bf634828b9b11ad00a5c23f96be3&hash=6243916182e91659aa5ee22aef120b20`;
-        const comicsUrl = `https://gateway.marvel.com/v1/public/characters/${characterId}/comics?ts=1&apikey=eff0bf634828b9b11ad00a5c23f96be3&hash=6243916182e91659aa5ee22aef120b20`;
-        const seriesUrl = `https://gateway.marvel.com/v1/public/characters/${characterId}/series?ts=1&apikey=eff0bf634828b9b11ad00a5c23f96be3&hash=6243916182e91659aa5ee22aef120b20`;
-        const eventsUrl = `https://gateway.marvel.com/v1/public/characters/${characterId}/events?ts=1&apikey=eff0bf634828b9b11ad00a5c23f96be3&hash=6243916182e91659aa5ee22aef120b20`;
+        const characterUrl = this.Global.apiUrl+`/characters/${characterId}?ts=1&apikey=${this.Global.apiKey}&hash=${this.Global.hash}`;
+        const comicsUrl =this.Global.apiUrl+ `/characters/${characterId}/comics?ts=1&apikey=${this.Global.apiKey}&hash=${this.Global.hash}`;
+        const seriesUrl = this.Global.apiUrl+`/characters/${characterId}/series?ts=1&apikey=${this.Global.apiKey}&hash=${this.Global.hash}`;
+        const eventsUrl = this.Global.apiUrl+`/characters/${characterId}/events?ts=1&apikey=${this.Global.apiKey}&hash=${this.Global.hash}`;
 
-        // Fetch character details
+  
         this.http.get(characterUrl).subscribe(
           (characterResponse: any) => {
             this.selectedCharacter = characterResponse.data.results[0];
