@@ -1,29 +1,45 @@
 <div *ngIf="selectedSeries">
-    <button (click)="goBack()">Back</button>
+  <button (click)="goBack()">Back</button>
     <h2>{{ selectedSeries.title }}</h2>
     <img class="character"[src]="getThumbnailUrl(selectedSeries)" alt="{{ selectedSeries.title }} Thumbnail">
     <p>Description: {{ selectedSeries.description || 'No description available' }}</p>
     <div class="overlay">
         <h3>Creators</h3>
         <ul class="creator">
-            <li *ngFor="let creator of creators">
+            <ng-container *ngIf="creators && creators.length > 0; else noCreators">
+              <li *ngFor="let creator of creators">
                 <app-creator [creator]="creator"></app-creator>
-            </li>
-        </ul>
+              </li>
+            </ng-container>
+            <ng-template #noCreators>
+              <li class="no-available-message">No creators available</li>
+            </ng-template>
+          </ul>
     </div>
   
     <h3>Characters</h3>
-    <ul class="comic">
-        <li *ngFor="let character of characters">
+    <ng-container *ngIf="characters && characters.length > 0; else noCharacters">
+        <ul class="comic">
+            <li *ngFor="let character of characters">
             <app-characters [character]="character"></app-characters>
-        </li>
-    </ul>
-    
+            </li>
+        </ul>
+        </ng-container>
+        <ng-template #noCharacters>
+        <p class="no-available-message">No characters available</p>
+        </ng-template>
+
+
     <h3>Comics</h3>
     <ul class="comic">
         <li *ngFor="let comic of comics">
             <app-comic [comic]="comic"></app-comic>
         </li>
+        </ul>
+        <ng-template #noComucs>
+        <p class="no-available-message">No characters available</p>
+        </ng-template>
+        <ul class="comic">
     </ul>
 
 </div>

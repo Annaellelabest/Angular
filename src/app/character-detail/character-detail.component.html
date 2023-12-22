@@ -6,22 +6,37 @@
 
     <h3>Comics</h3>
     <ul class="comic">
-        <li *ngFor="let comic of comics">
-            <app-comic [comic]="comic" class="comic-image"></app-comic>
-        </li>
+        <ng-container *ngIf="comics && comics.length > 0; else noComics">
+            <li *ngFor="let comic of comics">
+                <app-comic [comic]="comic" class="comic-image"></app-comic>
+            </li>
+        </ng-container>
+        <ng-template #noComics>
+            <li class="no-available-message">No comics available</li>
+        </ng-template>
     </ul>
 
     <h3>Series</h3>
     <ul class="comic">
-        <li *ngFor="let serie of series">
-            <app-series [serie]="serie"></app-series>
-        </li>
+        <ng-container *ngIf="series && series.length > 0; else noSeries">
+            <li *ngFor="let serie of series">
+                <app-series [serie]="serie"></app-series>
+            </li>
+        </ng-container>
+        <ng-template #noSeries>
+            <li class="no-available-message">No series available</li>
+        </ng-template>
     </ul>
 
     <h3>Events</h3>
     <ul class="comic">
-        <li *ngFor="let event of events">
-            <app-event [event]="event"></app-event>
-        </li>
+        <ng-container *ngIf="events && events.length > 0; else noEvents">
+            <li *ngFor="let event of events">
+                <app-event [event]="event"></app-event>
+            </li>
+        </ng-container>
+        <ng-template #noEvents>
+            <li class="no-available-message">No events available</li>
+        </ng-template>
     </ul>
 </div>

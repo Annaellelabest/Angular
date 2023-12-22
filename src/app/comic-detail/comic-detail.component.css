@@ -77,12 +77,11 @@ li {
   color: #555;
 margin-top: 12%;
 margin-left: 30%;
-
-
-
 }
 
-
+.no-available-message {
+  margin-bottom: 20px;
+}
 
 
 
