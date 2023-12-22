@@ -119,7 +119,6 @@ export class PageComponent implements OnInit {
         this.marvelData = data;
         const newResults = data.data.results;
         
-        // Ajoutez les nouveaux résultats à la liste existante
         this.allTitle = this.allTitle.concat(newResults);
   
         this.totalPages = Math.ceil(data.data.total / this.pageSize);

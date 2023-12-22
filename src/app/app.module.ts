@@ -23,7 +23,6 @@ import { EventDetailComponent } from './event-detail/event-detail.component';
 import { SeriesDetailComponent } from './series-detail/series-detail.component';
 import { CreatorDetailComponent } from './creator-detail/creator-detail.component';
 import { BackgroundComponent } from './background/background.component';
-import { SearchComponent } from './search/search.component';
 import { FooterComponent } from './footer/footer.component';
 
 
@@ -48,7 +47,6 @@ import { FooterComponent } from './footer/footer.component';
     SeriesDetailComponent,
     CreatorDetailComponent,
     BackgroundComponent,
-    SearchComponent,
     FooterComponent
   ],
   imports: [

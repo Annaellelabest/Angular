@@ -23,10 +23,14 @@ export class MarvelDataService {
       .set('offset', startIndex.toString())
       .set('limit', (endIndex - startIndex).toString());
 
-    if (searchValue) {
-      params = params.set(resourceType.includes('title') ? 'titleStartsWith' : 'nameStartsWith', searchValue);
-    }
-
+      if (searchValue) {
+        if (resourceType === 'characters' || resourceType === 'events') {
+          params = params.set('nameStartsWith', searchValue);
+        } else if (resourceType === 'comics' || resourceType === 'series') {
+          params = params.set('titleStartsWith', searchValue);
+        }
+      }
+  
     return this.http.get<MarvelData>(`${this.global.apiUrl}/${resourceType}`, { params });
   }
 
