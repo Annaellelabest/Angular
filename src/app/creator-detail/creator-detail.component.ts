@@ -33,7 +33,7 @@ export class CreatorDetailComponent implements OnInit {
             console.error('Error fetching creator details:', error);
           }
         );
-// Récupération des personnages liés au créateur
+// Récupération des comics liés au créateur
         this.marvelDetailServices.getRelated('creators',creatorId, 'comics').subscribe(
           (comicsResponse: any) => {
             this.comics = comicsResponse.data.results;
@@ -42,7 +42,7 @@ export class CreatorDetailComponent implements OnInit {
             console.error('Error fetching comics:', error);
           }
         );
-// Récupération des comics liés au créateur
+// Récupération des events liés au créateur
         this.marvelDetailServices.getRelated('creators',creatorId, 'events').subscribe(
           (eventsResponse: any) => {
             this.events = eventsResponse.data.results;
