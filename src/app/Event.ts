@@ -1,3 +1,4 @@
+// Structure de l'objet Event
 export interface Event {
     title: string;
     description: string;

@@ -1,3 +1,4 @@
+// Structure de l'objet MarvelCharacter
 export interface MarvelCharacter {
     id: number;
     thumbnail: {

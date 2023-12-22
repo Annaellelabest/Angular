@@ -1,3 +1,4 @@
+// Structure de l'objet MarvelComic
 export interface MarvelComic {
     id: number;
     title: string;

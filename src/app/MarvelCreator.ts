@@ -1,3 +1,4 @@
+// Structure de l'objet MarvelCreator
 export interface MarvelCreator {
     thumbnail: {
       path: string;

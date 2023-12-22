@@ -10,6 +10,7 @@ import { VariablesGlobales } from './variablesGlobale';
 export class MarvelDataService {
   constructor(private http: HttpClient, private global: VariablesGlobales) {}
 
+  // Creer la bonne url pour appélé l'api en focntion des parametres
   private getMarvelDataByType(
     resourceType: string,
     startIndex: number = 0,
@@ -23,6 +24,7 @@ export class MarvelDataService {
       .set('offset', startIndex.toString())
       .set('limit', (endIndex - startIndex).toString());
 
+     //Pour la fonchion de "filtre" par nom ou titre, url est modifié en fonction de la page sur laquelle on est
       if (searchValue) {
         if (resourceType === 'characters' || resourceType === 'events') {
           params = params.set('nameStartsWith', searchValue);
@@ -33,6 +35,9 @@ export class MarvelDataService {
   
     return this.http.get<MarvelData>(`${this.global.apiUrl}/${resourceType}`, { params });
   }
+
+  //differentes fonctions pour appeler l'api en fonction de la page sur laquelle on est
+  //differentes fonctions pour la recherche par nom ou titre
 
   getMarvelData(startIndex: number = 0, endIndex: number = 24, searchValue: string = ''): Observable<MarvelData> {
     return this.getMarvelDataByType('characters', startIndex, endIndex, searchValue);

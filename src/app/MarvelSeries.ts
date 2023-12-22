@@ -1,3 +1,4 @@
+// Structure de l'objet MarvelSeries
 export interface MarvelSeries {
     thumbnail: {
       path: string;

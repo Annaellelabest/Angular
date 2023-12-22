@@ -1,3 +1,4 @@
+// Structure de l'objet MarvelEvent
 export interface MarvelEvent {
     thumbnail: {
       path: string;
