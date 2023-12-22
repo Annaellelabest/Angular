@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
 import { MarvelCharacter } from '../MarvelCharacter';
 import { Comic } from '../Comic';
 import { Series } from '../Series';
-import { VariablesGlobales } from '../variablesGlobale';
+import { MarvelDetailServices } from '../detail.services';
 
 
 
@@ -20,54 +19,47 @@ export class CharacterDetailComponent implements OnInit {
   series: Series[] = [];
   events: Event[] = [];
 
-  constructor(private route: ActivatedRoute, private http: HttpClient, private Global: VariablesGlobales) {}
+  constructor(private route: ActivatedRoute, private marvelDetailServices: MarvelDetailServices) {}
 
   ngOnInit(): void {
-    this.route.paramMap.subscribe(params => {
+    this.route.paramMap.subscribe((params) => {
       const characterId = params.get('id');
       if (characterId) {
-        const characterUrl = this.Global.apiUrl+`/characters/${characterId}?ts=1&apikey=${this.Global.apiKey}&hash=${this.Global.hash}`;
-        const comicsUrl =this.Global.apiUrl+ `/characters/${characterId}/comics?ts=1&apikey=${this.Global.apiKey}&hash=${this.Global.hash}`;
-        const seriesUrl = this.Global.apiUrl+`/characters/${characterId}/series?ts=1&apikey=${this.Global.apiKey}&hash=${this.Global.hash}`;
-        const eventsUrl = this.Global.apiUrl+`/characters/${characterId}/events?ts=1&apikey=${this.Global.apiKey}&hash=${this.Global.hash}`;
-
-  
-        this.http.get(characterUrl).subscribe(
+        this.marvelDetailServices.getDetails('characters',characterId).subscribe(
           (characterResponse: any) => {
             this.selectedCharacter = characterResponse.data.results[0];
           },
-          error => {
+          (error) => {
             console.error('Error fetching character details:', error);
           }
         );
 
-        this.http.get(comicsUrl).subscribe(
+        this.marvelDetailServices.getRelated('characters',characterId,'comics').subscribe(
           (comicsResponse: any) => {
             this.comics = comicsResponse.data.results;
           },
-          error => {
+          (error) => {
             console.error('Error fetching comics:', error);
           }
         );
 
+        this.marvelDetailServices.getRelated('characters',characterId,'series').subscribe(
+          (seriesResponse: any) => {
+            this.series = seriesResponse.data.results;
+          },
+          (error) => {
+            console.error('Error fetching comics:', error);
+          }
+        );
 
-           this.http.get(seriesUrl).subscribe(
-            (seriesResponse: any) => {
-              this.series = seriesResponse.data.results;
-            },
-            error => {
-              console.error('Error fetching <series>:', error);
-            }
-          );
-
-          this.http.get(eventsUrl).subscribe(
-            (eventsResponse: any) => {
-              this.events = eventsResponse.data.results;
-            },
-            error => {
-              console.error('Error fetching events:', error);
-            }
-          );
+        this.marvelDetailServices.getRelated('characters',characterId,'events').subscribe(
+          (eventsResponse: any) => {
+            this.events = eventsResponse.data.results;
+          },
+          (error) => {
+            console.error('Error fetching comics:', error);
+          }
+        );
       }
     });
 

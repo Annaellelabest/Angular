@@ -2,12 +2,10 @@
 
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
 import { MarvelComic } from '../MarvelComic';
 import { Character } from '../Character';
 import { Creator } from '../Creator';
-import { VariablesGlobales } from '../variablesGlobale';
-
+import { MarvelDetailServices } from '../detail.services';
 
 @Component({
   selector: 'app-comic-detail',
@@ -21,47 +19,38 @@ export class ComicDetailComponent implements OnInit {
   creators: Creator[] = [];
 
 
-  constructor(private route: ActivatedRoute, private http: HttpClient, private Global: VariablesGlobales) {}
+  constructor(private route: ActivatedRoute, private marvelDetailServices: MarvelDetailServices) {}
 
   ngOnInit(): void {
-    this.route.paramMap.subscribe(params => {
+    this.route.paramMap.subscribe((params) => {
       const comicId = params.get('id');
       if (comicId) {
-        const comicUrl = this.Global.apiUrl+`/comics/${comicId}?ts=1&apikey=${this.Global.apiKey}&hash=${this.Global.hash}`;
-        const charactersUrl = this.Global.apiUrl+`/comics/${comicId}/characters?ts=1&apikey=${this.Global.apiKey}&hash=${this.Global.hash}`;
-        const creatorsUrl = this.Global.apiUrl+`/comics/${comicId}/creators?ts=1&apikey=${this.Global.apiKey}&hash=${this.Global.hash}`;
-       
-
-        // Fetch character details
-        this.http.get(comicUrl).subscribe(
+        this.marvelDetailServices.getDetails('comics',comicId).subscribe(
           (comicResponse: any) => {
             this.selectedComic = comicResponse.data.results[0];
           },
-          error => {
-            console.error('Error fetching character details:', error);
+          (error) => {
+            console.error('Error fetching comic details:', error);
           }
         );
 
-        // Fetch comics for the character
-        this.http.get(charactersUrl).subscribe(
+        this.marvelDetailServices.getRelated('comics',comicId, 'characters').subscribe(
           (charactersResponse: any) => {
             this.characters = charactersResponse.data.results;
           },
-          error => {
+          (error) => {
             console.error('Error fetching characters:', error);
           }
         );
 
-        this.http.get(creatorsUrl).subscribe(
+        this.marvelDetailServices.getRelated('comics',comicId, 'creators').subscribe(
           (creatorsResponse: any) => {
             this.creators = creatorsResponse.data.results;
           },
-          error => {
-            console.error('Error fetching characters:', error);
+          (error) => {
+            console.error('Error fetching creators:', error);
           }
         );
-
-  
       }
     });
   }

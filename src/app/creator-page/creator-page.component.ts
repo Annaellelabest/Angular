@@ -6,6 +6,7 @@ import { HttpClient } from '@angular/common/http';
 import { MarvelCharacter } from '../MarvelCharacter';
 import { MarvelData } from '../MarvelData';
 
+
 @Component({
   selector: 'app-creator-page',
   templateUrl: './creator-page.component.html',

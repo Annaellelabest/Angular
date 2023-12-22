@@ -10,7 +10,12 @@ import { VariablesGlobales } from './variablesGlobale';
 export class MarvelDataService {
   constructor(private http: HttpClient, private global: VariablesGlobales) {}
 
-  getMarvelData(startIndex: number = 0, endIndex: number = 24, searchValue: string = ''): Observable<MarvelData> {
+  private getMarvelDataByType(
+    resourceType: string,
+    startIndex: number = 0,
+    endIndex: number = 24,
+    searchValue: string = ''
+  ): Observable<MarvelData> {
     let params = new HttpParams()
       .set('ts', '1')
       .set('apikey', this.global.apiKey)
@@ -19,101 +24,41 @@ export class MarvelDataService {
       .set('limit', (endIndex - startIndex).toString());
 
     if (searchValue) {
-      params = params.set('nameStartsWith', searchValue);
+      params = params.set(resourceType.includes('title') ? 'titleStartsWith' : 'nameStartsWith', searchValue);
     }
 
-    return this.http.get<MarvelData>(`${this.global.apiUrl}/characters`, { params });
+    return this.http.get<MarvelData>(`${this.global.apiUrl}/${resourceType}`, { params });
+  }
+
+  getMarvelData(startIndex: number = 0, endIndex: number = 24, searchValue: string = ''): Observable<MarvelData> {
+    return this.getMarvelDataByType('characters', startIndex, endIndex, searchValue);
   }
 
   searchMarvelByName(name: string): Observable<MarvelData> {
-    let params = new HttpParams()
-      .set('ts', '1')
-      .set('apikey', this.global.apiKey)
-      .set('hash', '6243916182e91659aa5ee22aef120b20')
-      .set('nameStartsWith', name)
-      .set('limit', '24');
-
-    return this.http.get<MarvelData>(`${this.global.apiUrl}/characters`, { params });
+    return this.getMarvelDataByType('characters', 0, 24, name);
   }
 
   getMarvelDataComic(startIndex: number = 0, endIndex: number = 24, searchValue: string = ''): Observable<MarvelData> {
-    let params = new HttpParams()
-      .set('ts', '1')
-      .set('apikey', this.global.apiKey)
-      .set('hash', this.global.hash)
-      .set('offset', startIndex.toString())
-      .set('limit', (endIndex - startIndex).toString());
-
-    if (searchValue) {
-      params = params.set('titleStartsWith', searchValue);
-    }
-
-    return this.http.get<MarvelData>(`${this.global.apiUrl}/comics`, { params });
+    return this.getMarvelDataByType('comics', startIndex, endIndex, searchValue);
   }
 
   searchMarvelByTitleComic(title: string): Observable<MarvelData> {
-    let params = new HttpParams()
-      .set('ts', '1')
-      .set('apikey', this.global.apiKey)
-      .set('hash', this.global.hash)
-      .set('titleStartsWith', title)
-      .set('limit', '24');
-
-    return this.http.get<MarvelData>(`${this.global.apiUrl}/comics`, { params });
+    return this.getMarvelDataByType('comics', 0, 24, title);
   }
-
 
   getMarvelDataEvent(startIndex: number = 0, endIndex: number = 24, searchValue: string = ''): Observable<MarvelData> {
-    let params = new HttpParams()
-      .set('ts', '1')
-      .set('apikey', this.global.apiKey)
-      .set('hash', this.global.hash)
-      .set('offset', startIndex.toString())
-      .set('limit', (endIndex - startIndex).toString());
-  
-    if (searchValue) {
-      params = params.set('nameStartsWith', searchValue);
-    }
-  
-    return this.http.get<MarvelData>(this.global.apiUrl+'/events', { params });
+    return this.getMarvelDataByType('events', startIndex, endIndex, searchValue);
   }
 
-
   searchMarvelByNameEvent(name: string): Observable<MarvelData> {
-    let params = new HttpParams()
-      .set('ts', '1')
-      .set('apikey', this.global.apiKey)
-      .set('hash', this.global.hash)
-      .set('nameStartsWith', name)
-      .set('limit', '24');
-
-    return this.http.get<MarvelData>(this.global.apiUrl+'/events', { params });
+    return this.getMarvelDataByType('events', 0, 24, name);
   }
 
   getMarvelDataSeries(startIndex: number = 0, endIndex: number = 24, searchValue: string = ''): Observable<MarvelData> {
-    let params = new HttpParams()
-      .set('ts', '1')
-      .set('apikey', this.global.apiKey)
-      .set('hash', this.global.hash)
-      .set('offset', startIndex.toString())
-      .set('limit', (endIndex - startIndex).toString());
-  
-    if (searchValue) {
-      params = params.set('titleStartsWith', searchValue);
-    }
-  
-    return this.http.get<MarvelData>(this.global.apiUrl+'/series', { params });
+    return this.getMarvelDataByType('series', startIndex, endIndex, searchValue);
   }
+
   searchMarvelByNameSeries(name: string): Observable<MarvelData> {
-    let params = new HttpParams()
-      .set('ts', '1')
-      .set('apikey', this.global.apiKey)
-      .set('hash', this.global.hash)
-      .set('titleStartsWith', name)
-      .set('limit', '24');
-
-    return this.http.get<MarvelData>(this.global.apiUrl+'/series', { params });
+    return this.getMarvelDataByType('series', 0, 24, name);
   }
-
-  
 }
