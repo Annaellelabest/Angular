@@ -24,6 +24,7 @@ export class CreatorDetailComponent implements OnInit {
     this.route.paramMap.subscribe((params) => {
       const creatorId = params.get('id');
       if (creatorId) {
+        // Récupération des détails du créateur
         this.marvelDetailServices.getDetails('creators',creatorId).subscribe(
           (creatorResponse: any) => {
             this.selectedCreator = creatorResponse.data.results[0];
@@ -32,16 +33,7 @@ export class CreatorDetailComponent implements OnInit {
             console.error('Error fetching creator details:', error);
           }
         );
-
-        this.marvelDetailServices.getRelated('creators',creatorId, 'characters').subscribe(
-          (charactersResponse: any) => {
-            this.characters = charactersResponse.data.results;
-          },
-          (error) => {
-            console.error('Error fetching characters:', error);
-          }
-        );
-
+// Récupération des personnages liés au créateur
         this.marvelDetailServices.getRelated('creators',creatorId, 'comics').subscribe(
           (comicsResponse: any) => {
             this.comics = comicsResponse.data.results;
@@ -50,7 +42,7 @@ export class CreatorDetailComponent implements OnInit {
             console.error('Error fetching comics:', error);
           }
         );
-
+// Récupération des comics liés au créateur
         this.marvelDetailServices.getRelated('creators',creatorId, 'events').subscribe(
           (eventsResponse: any) => {
             this.events = eventsResponse.data.results;
@@ -63,9 +55,12 @@ export class CreatorDetailComponent implements OnInit {
     });
   }
 
+  // Récupération de l'URL de l'image du créateur
   getThumbnailUrl(creator: MarvelCreator): string {
     return `${creator.thumbnail.path}.${creator.thumbnail.extension}`;
   }
+
+  // Retour à la page characters
   goBack() {
     this.router.navigate(['/marvel']);
   }

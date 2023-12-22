@@ -15,30 +15,9 @@ export class CreatorComponent {
   @Input() creators: Creator[] = [];
 
 
-
+// Récupération de l'URL de la miniature du creator
   getThumbnailUrl(creator: MarvelCreator): string {
     return `${creator.thumbnail.path}.${creator.thumbnail.extension}`;
-  }
-  shouldDisplayThumbnail(creator: MarvelCreator): boolean {
-    const thumbnailUrl = this.getThumbnailUrl(creator);
-    return !!thumbnailUrl && !thumbnailUrl.includes('image_not_available.jpg');
-  }
-
-  shouldDisplayTitle(creator: MarvelCreator): boolean {
-
-    return !!creator?.fullName && !creator.fullName.includes('Example');
-  }
-showNextImage() {
-    let nextIndex = (this.currentImageIndex + 1) % this.characters.length;
-
-    while (nextIndex !== this.currentImageIndex && !this.shouldDisplayThumbnail(this.characters[nextIndex])) {
-      nextIndex = (nextIndex + 1) % this.characters.length;
-    }
-    this.currentImageIndex = nextIndex;
-
-    if (!this.shouldDisplayThumbnail(this.characters[this.currentImageIndex])) {
-      this.showNextImage();
-    }
   }
 
 }

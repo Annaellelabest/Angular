@@ -1,9 +1,16 @@
 <div *ngIf="selectedCharacter">
+
+  <!-- Bouton pour revenir en arrière -->
     <button (click)="goBack()">Back</button>
+
+      <!-- Affichage du nom du personnage -->
     <h2>{{ selectedCharacter.name }}</h2>
+
+<!-- Affichage de l'image du personnage avec la gestion de l'absence de description -->
     <img class="character" [src]="getThumbnailUrl(selectedCharacter)" alt="{{ selectedCharacter.name }} Thumbnail">
     <p class="description">Description: {{ selectedCharacter.description || 'No description available' }}</p>
 
+<!-- Section pour afficher les éléments liées à la "carte" avec gestion des cas où il y en a ou pas -->
     <h3>Comics</h3>
     <ul class="comic">
         <ng-container *ngIf="comics && comics.length > 0; else noComics">

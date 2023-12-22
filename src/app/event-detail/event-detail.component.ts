@@ -25,6 +25,7 @@ export class EventDetailComponent implements OnInit {
     this.route.paramMap.subscribe((params) => {
       const eventId = params.get('id');
       if (eventId) {
+        // Récupération des détails de l'événement
         this.marvelDetailServices.getDetails('events',eventId).subscribe(
           (eventResponse: any) => {
             this.selectedEvent = eventResponse.data.results[0];
@@ -33,7 +34,7 @@ export class EventDetailComponent implements OnInit {
             console.error('Error fetching event details:', error);
           }
         );
-
+// Récupération des personnages liés à l'événement
         this.marvelDetailServices.getRelated('events',eventId, 'characters').subscribe(
           (charactersResponse: any) => {
             this.characters = charactersResponse.data.results;
@@ -42,7 +43,7 @@ export class EventDetailComponent implements OnInit {
             console.error('Error fetching characters:', error);
           }
         );
-
+// Récupération des comics liés à l'événement
         this.marvelDetailServices.getRelated('events',eventId, 'comics').subscribe(
           (comicsResponse: any) => {
             this.comics = comicsResponse.data.results;
@@ -51,7 +52,7 @@ export class EventDetailComponent implements OnInit {
             console.error('Error fetching comics:', error);
           }
         );
-
+// Récupération des créateurs liés à l'événement
         this.marvelDetailServices.getRelated('events',eventId, 'creators').subscribe(
           (creatorsResponse: any) => {
             this.creators = creatorsResponse.data.results;

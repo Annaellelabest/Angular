@@ -16,32 +16,10 @@ export class ComicComponent {
   @Input() comics: Comic[] = [];
 
 
-
+// Récupération de l'URL de la miniature du comic
   getThumbnailUrl(comic: MarvelComic): string {
     return `${comic.thumbnail.path}.${comic.thumbnail.extension}`;
   }
-  shouldDisplayThumbnail(comic: MarvelComic): boolean {
-    const thumbnailUrl = this.getThumbnailUrl(comic);
-    return !!thumbnailUrl && !thumbnailUrl.includes('image_not_available.jpg');
-  }
-
-  shouldDisplayTitle(comic: MarvelComic): boolean {
-
-    return !!comic?.title && !comic.title.includes('Example');
-  }
-showNextImage() {
-    let nextIndex = (this.currentImageIndex + 1) % this.characters.length;
-
-    while (nextIndex !== this.currentImageIndex && !this.shouldDisplayThumbnail(this.characters[nextIndex])) {
-      nextIndex = (nextIndex + 1) % this.characters.length;
-    }
-
-    this.currentImageIndex = nextIndex;
-
-    if (!this.shouldDisplayThumbnail(this.characters[this.currentImageIndex])) {
-      this.showNextImage();
-    }
-  }
-
+  
 }
   

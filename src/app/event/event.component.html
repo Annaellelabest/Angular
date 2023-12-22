@@ -1,6 +1,9 @@
 <div *ngIf="event">
+    <!-- Affiche le nom de l'event -->
     <h3 >{{ event.title }}</h3>
+    <!-- Lien vers la page de détails de l'event en utilisant le routeur Angular -->
     <a [routerLink]="['/event-detail', event?.id]">
-    <img [src]="getThumbnailUrl(event)" alt="{{ event.title }} Thumbnail" (click)="showNextImage()">
+        <!-- Affiche la miniature de l'event -->
+    <img [src]="getThumbnailUrl(event)" alt="{{ event.title }} Thumbnail" >
     </a>
 </div>

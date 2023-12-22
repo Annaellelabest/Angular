@@ -14,12 +14,17 @@ import { MarvelDataService } from '../data.services';
   styleUrls: ['./event-page.component.css']
 })
 export class EventPageComponent implements OnInit {
+  // Paramètres de pagination
   pageSize: number = 24;
   currentPage: number = 1;
   totalPages: number = 1;
+
+  // Données des cartes
   filteredTitle: MarvelCharacter[] = [];
   marvelData: MarvelData | undefined;
   allTitle: MarvelCharacter[] = [];
+
+  // Formulaire de recherche
   searchForm: FormGroup;
   searchCtrl: FormControl<string>;
   lastSearchValue: string = '';
@@ -32,6 +37,7 @@ export class EventPageComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    // Récupération des données Marvel au chargement de la page
     this.dataService.getMarvelDataEvent().subscribe(
       data => {
         this.marvelData = data;
@@ -52,6 +58,7 @@ export class EventPageComponent implements OnInit {
       )
       .subscribe((data: MarvelData) => {
         if (data) {
+          // Mise à jour des events avec les résultats de la recherche
           this.filteredTitle = data.data.results;
         } else {
           this.filteredTitle = [];
@@ -59,10 +66,12 @@ export class EventPageComponent implements OnInit {
       });
   }
 
+  // Récupération de l'URL de l'image du event
   searchMarvelCharacters(searchValue: string): Observable<MarvelData> {
     return this.dataService.searchMarvelByNameEvent(searchValue);
   }
 
+  // Récupération de l'URL de l'image du event
   onSearchChange() {
     const searchValue = this.searchCtrl.value;
     this.lastSearchValue = searchValue;
@@ -84,12 +93,13 @@ export class EventPageComponent implements OnInit {
     }
   }
   
-
+// Met à jour la liste des events affichés en fonction de la pagination
   updateFilteredCharacters() {
     const startIndex = (this.currentPage - 1) * this.pageSize;
     const endIndex = startIndex + this.pageSize;
     this.filteredTitle = this.allTitle.slice(startIndex, endIndex);
   }
+  
   nextPage() {
     if (this.currentPage < this.totalPages) {
       this.currentPage++;
@@ -104,6 +114,8 @@ export class EventPageComponent implements OnInit {
       this.getMarvelDataAndUpdate();
     }
   }
+
+// Récupérer de nouvelles données et mettre à jour les events
   getMarvelDataAndUpdate() {
     const startIndex = (this.currentPage - 1) * this.pageSize;
     const endIndex = startIndex + this.pageSize;

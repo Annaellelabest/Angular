@@ -26,6 +26,7 @@ export class CharacterDetailComponent implements OnInit {
     this.route.paramMap.subscribe((params) => {
       const characterId = params.get('id');
       if (characterId) {
+        // Récupération des détails du personnage
         this.marvelDetailServices.getDetails('characters',characterId).subscribe(
           (characterResponse: any) => {
             this.selectedCharacter = characterResponse.data.results[0];
@@ -34,7 +35,7 @@ export class CharacterDetailComponent implements OnInit {
             console.error('Error fetching character details:', error);
           }
         );
-
+ // Récupération des comics liés au personnage
         this.marvelDetailServices.getRelated('characters',characterId,'comics').subscribe(
           (comicsResponse: any) => {
             this.comics = comicsResponse.data.results;
@@ -43,7 +44,7 @@ export class CharacterDetailComponent implements OnInit {
             console.error('Error fetching comics:', error);
           }
         );
-
+ // Récupération des séries liées au personnage
         this.marvelDetailServices.getRelated('characters',characterId,'series').subscribe(
           (seriesResponse: any) => {
             this.series = seriesResponse.data.results;
@@ -52,7 +53,7 @@ export class CharacterDetailComponent implements OnInit {
             console.error('Error fetching comics:', error);
           }
         );
-
+ // Récupération des événements liés au personnage
         this.marvelDetailServices.getRelated('characters',characterId,'events').subscribe(
           (eventsResponse: any) => {
             this.events = eventsResponse.data.results;
@@ -67,10 +68,12 @@ export class CharacterDetailComponent implements OnInit {
 
   }
 
+  // Construction de l'URL de l'image du personnage
   getThumbnailUrl(character: MarvelCharacter): string {
     return `${character.thumbnail.path}.${character.thumbnail.extension}`;
   }
 
+ // Retour à la page characters
   goBack() {
     this.router.navigate(['/marvel']);
   }

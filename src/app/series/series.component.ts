@@ -15,33 +15,10 @@ export class SeriesComponent {
   @Input() characters: MarvelSeries[] = [];
   @Input() series: Series[] = [];
 
+// Récupération de l'URL de la miniature du serie
   getThumbnailUrl(serie: MarvelSeries): string {
     return `${serie.thumbnail.path}.${serie.thumbnail.extension}`;
   }
-  shouldDisplayThumbnail(serie: MarvelSeries): boolean {
-    const thumbnailUrl = this.getThumbnailUrl(serie);
-    return !!thumbnailUrl && !thumbnailUrl.includes('image_not_available.jpg');
-  }
-
-  shouldDisplayTitle(serie: MarvelSeries): boolean {
-
-    return !!serie?.fullTitle && !serie.fullTitle.includes('Example');
-  }
-showNextImage() {
-    let nextIndex = (this.currentImageIndex + 1) % this.characters.length;
-
-    while (nextIndex !== this.currentImageIndex && !this.shouldDisplayThumbnail(this.characters[nextIndex])) {
-      nextIndex = (nextIndex + 1) % this.characters.length;
-    }
-
-    // Update the current index and check if we have an image to display
-    this.currentImageIndex = nextIndex;
-
-    // If there's still no valid thumbnail, move to the next image
-    if (!this.shouldDisplayThumbnail(this.characters[this.currentImageIndex])) {
-      this.showNextImage();
-    }
-  }
-
+  
 }
   

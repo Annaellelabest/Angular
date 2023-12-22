@@ -13,12 +13,17 @@ import { MarvelCharacter } from '../MarvelCharacter';
 })
 
 export class MarvelComponent implements OnInit {
+  // Paramètres de pagination
   pageSize: number = 24;
   currentPage: number = 1;
   totalPages: number = 1;
+
+   // Données des cartes
   allCharacters: MarvelCharacter[] = [];
   filteredCharacters: MarvelCharacter[] = [];
   marvelData: MarvelData | undefined;
+
+   // Formulaire de recherche
   searchForm: FormGroup;
   searchCtrl: FormControl<string>;
   lastSearchValue: string = '';
@@ -31,6 +36,7 @@ export class MarvelComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    // Récupération des données Marvel au chargement de la page
     this.dataService.getMarvelData().subscribe(data => {
       this.marvelData = data;
       this.allCharacters = data.data.results;
@@ -47,6 +53,7 @@ export class MarvelComponent implements OnInit {
       )
       .subscribe((data: MarvelData) => {
         if (data) {
+          // Mise à jour des personnages avec les résultats de la recherche
           this.allCharacters = data.data.results;
           this.totalPages = Math.ceil(data.data.total / this.pageSize);
           this.currentPage = 1;
@@ -57,15 +64,17 @@ export class MarvelComponent implements OnInit {
       });
   }
 
-  
+  // Recherche des personnages Marvel par nom
   searchMarvelCharacters(searchValue: string): Observable<MarvelData> {
     return this.dataService.searchMarvelByName(searchValue);
   }
 
+   // Gestion des changements dans le champ de recherche
   onSearchChange() {
     const searchValue = this.searchCtrl.value;
     this.lastSearchValue = searchValue; 
     if (searchValue) {
+      // Effectuer une recherche si un terme est saisi
       this.searchMarvelCharacters(searchValue).subscribe((data: MarvelData) => {
         this.allCharacters = data.data.results;
         this.totalPages = Math.ceil(data.data.total / this.pageSize);
@@ -76,7 +85,7 @@ export class MarvelComponent implements OnInit {
       this.filteredCharacters = this.allCharacters.slice(0, this.pageSize);
     }
   }
-
+// Met à jour la liste des personnages affichés en fonction de la pagination
   updateFilteredCharacters() {
     const startIndex = (this.currentPage - 1) * this.pageSize;
     const endIndex = startIndex + this.pageSize;
@@ -97,6 +106,8 @@ export class MarvelComponent implements OnInit {
       this.getMarvelDataAndUpdate();
     }
   }
+
+  // Récupérer de nouvelles données et mettre à jour les personnages
   getMarvelDataAndUpdate() {
     const startIndex = (this.currentPage - 1) * this.pageSize;
     const endIndex = startIndex + this.pageSize;

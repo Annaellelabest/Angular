@@ -13,6 +13,7 @@ export class CharactersComponent {
   constructor(private router: Router) {}
   @Input() character: any | undefined;
 
+  // Récupération de l'URL de la miniature du personnage
   getThumbnailUrl(character: MarvelCharacter): string {
     return `${character.thumbnail.path}.${character.thumbnail.extension}`;
   }

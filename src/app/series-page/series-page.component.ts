@@ -13,12 +13,17 @@ import { MarvelDataService } from '../data.services';
   styleUrls: ['./series-page.component.css']
 })
 export class SeriesPageComponent {
+  // paramètres de pagination
   pageSize: number = 24;
   currentPage: number = 1;
   totalPages: number = 1;
+
+  // Données des cartes
   filteredTitle: MarvelCharacter[] = [];
   marvelData: MarvelData | undefined;
   allTitle: MarvelCharacter[] = [];
+
+  // Formulaire de recherche
   searchForm: FormGroup;
   searchCtrl: FormControl<string>;
   lastSearchValue: string = '';
@@ -31,6 +36,7 @@ export class SeriesPageComponent {
   }
 
   ngOnInit(): void {
+    // Récupération des données Marvel au chargement de la page
     this.dataService.getMarvelDataSeries().subscribe(
       data => {
         this.marvelData = data;
@@ -51,6 +57,7 @@ export class SeriesPageComponent {
       )
       .subscribe((data: MarvelData) => {
         if (data) {
+          // Mise à jour des series avec les résultats de la recherche
           this.filteredTitle = data.data.results;
         } else {
           this.filteredTitle = [];
@@ -58,11 +65,12 @@ export class SeriesPageComponent {
       });
   }
   
-
+// Récupération de l'URL de l'image du series
   searchMarvelCharacters(searchValue: string): Observable<MarvelData> {
     return this.dataService.searchMarvelByNameSeries(searchValue);
   }
 
+  // Récupération de l'URL de l'image du series
   onSearchChange() {
     const searchValue = this.searchCtrl.value;
     this.lastSearchValue = searchValue;
@@ -83,7 +91,8 @@ export class SeriesPageComponent {
       });
     }
   }
-  
+ 
+  // Met à jour la liste des series affichés en fonction de la pagination
   updateFilteredCharacters() {
     const startIndex = (this.currentPage - 1) * this.pageSize;
     const endIndex = startIndex + this.pageSize;
@@ -104,6 +113,8 @@ export class SeriesPageComponent {
       this.getMarvelDataAndUpdate();
     }
   }
+
+  // Récupérer de nouvelles données et mettre à jour les series
   getMarvelDataAndUpdate() {
     const startIndex = (this.currentPage - 1) * this.pageSize;
     const endIndex = startIndex + this.pageSize;

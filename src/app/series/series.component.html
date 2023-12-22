@@ -1,6 +1,9 @@
 <div *ngIf="serie">
+        <!-- Affiche le nom de la series -->
     <h3 >{{ serie.title }}</h3>
+        <!-- Lien vers la page de détails de la series en utilisant le routeur Angular -->
     <a [routerLink]="['/series-detail', serie?.id]">
-    <img [src]="getThumbnailUrl(serie)" alt="{{ serie.title }} Thumbnail" (click)="showNextImage()">
+        <!-- Affiche la miniature de la series -->
+    <img [src]="getThumbnailUrl(serie)" alt="{{ serie.title }} Thumbnail">
     </a>
 </div>

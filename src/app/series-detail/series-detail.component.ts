@@ -25,6 +25,7 @@ export class SeriesDetailComponent implements OnInit {
     this.route.paramMap.subscribe((params) => {
       const seriesId = params.get('id');
       if (seriesId) {
+        // Récupération des détails de la série
         this.marvelDetailServices.getDetails('series', seriesId).subscribe(
           (seriesResponse: any) => {
             this.selectedSeries = seriesResponse.data.results[0];
@@ -33,7 +34,7 @@ export class SeriesDetailComponent implements OnInit {
             console.error('Error fetching series details:', error);
           }
         );
-
+// Récupération des personnages liés à la série
         this.marvelDetailServices.getRelated('series', seriesId, 'characters').subscribe(
           (charactersResponse: any) => {
             this.characters = charactersResponse.data.results;
@@ -42,7 +43,7 @@ export class SeriesDetailComponent implements OnInit {
             console.error('Error fetching characters:', error);
           }
         );
-
+// Récupération des comics liés à la série
         this.marvelDetailServices.getRelated('series', seriesId, 'comics').subscribe(
           (comicsResponse: any) => {
             this.comics = comicsResponse.data.results;
@@ -51,7 +52,7 @@ export class SeriesDetailComponent implements OnInit {
             console.error('Error fetching comics:', error);
           }
         );
-
+// Récupération des créateurs liés à la série
         this.marvelDetailServices.getRelated('series', seriesId, 'creators').subscribe(
           (creatorsResponse: any) => {
             this.creators = creatorsResponse.data.results;
@@ -64,9 +65,12 @@ export class SeriesDetailComponent implements OnInit {
     });
   }
 
+  // Récupération de l'URL de l'image de la série
   getThumbnailUrl(comic: MarvelSeries): string {
     return `${comic.thumbnail.path}.${comic.thumbnail.extension}`;
   }
+
+  // Retour à la page series
   goBack() {
     this.router.navigate(['/series']);
   }

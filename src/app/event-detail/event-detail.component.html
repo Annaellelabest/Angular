@@ -1,10 +1,17 @@
 <div *ngIf="selectedEvent">
+
+<!-- Bouton pour revenir en arrière -->
   <button (click)="goBack()">Back</button>
+
+<!-- Affichage du titre du event -->
     <h2>{{ selectedEvent.title }}</h2>
     <img class="character"[src]="getThumbnailUrl(selectedEvent)" alt="{{ selectedEvent.title }} Thumbnail">
    
+<!-- Affichage de l'image de l'event avec la gestion de l'absence de description -->
     <p>Description: {{ selectedEvent.description || 'No description available' }}</p>
     <div class="overlay">
+  
+<!-- Section pour afficher les éléments liées à la "carte" avec gestion des cas où il y en a ou pas -->
     <h3>Creators</h3>
     <ul class="creator">
         <ng-container *ngIf="creators && creators.length > 0; else noCreators">

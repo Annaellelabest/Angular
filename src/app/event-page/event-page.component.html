@@ -3,6 +3,7 @@
       <p class="lead tex-center" id="message"></p>
     </div>
     <h2>Marvel Events</h2>
+           <!-- Section de recherche et de pagination -->
     <div class="search-and-pagination">
     <form [formGroup]="searchForm" class="search-form">
       <input formControlName="search" placeholder="Search.." (input)="onSearchChange()">
@@ -13,13 +14,16 @@
       <button (click)="nextPage()" [disabled]="currentPage === totalPages">Next</button>
     </div>
   </div>
+   <!-- Affiche la liste de event -->
   <div class="flex-container">
     <ng-container *ngIf="marvelData; else loading">
       <ng-container *ngFor="let event of filteredTitle">
+        <!-- Vérification de l'existence de la miniature du events avant son affichage -->
         <ng-container *ngIf="event.thumbnail && event.thumbnail.path && !event.thumbnail.path.includes('image_not_available')">
           <app-event [event]="event" class="event_image"></app-event>
         </ng-container>
       </ng-container>
     </ng-container>
+        <!-- Affichage d'un message de chargement -->
     <ng-template #loading>Loading...</ng-template>
   </div>

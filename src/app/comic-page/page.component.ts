@@ -15,12 +15,17 @@ import { MarvelDataService } from '../data.services';
 })
 
 export class PageComponent implements OnInit {
+  // Paramètres de pagination
   pageSize: number = 24;
   currentPage: number = 1;
   totalPages: number = 1;
+
+  // Données des cartes
   filteredTitle: MarvelCharacter[] = [];
   marvelData: MarvelData | undefined;
   allTitle: MarvelCharacter[] = [];
+
+  // Formulaire de recherche
   searchForm: FormGroup;
   searchCtrl: FormControl<string>;
   lastSearchValue: string = '';
@@ -33,6 +38,7 @@ export class PageComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    // Récupération des données Marvel au chargement de la page
     this.dataService.getMarvelDataComic().subscribe(
       data => {
         this.marvelData = data;
@@ -53,6 +59,7 @@ export class PageComponent implements OnInit {
       )
       .subscribe((data: MarvelData) => {
         if (data) {
+          // Mise à jour des comics avec les résultats de la recherche
           this.filteredTitle = data.data.results;
         } else {
           this.filteredTitle = [];
@@ -61,12 +68,12 @@ export class PageComponent implements OnInit {
   }
 
 
-
+// Récupération de l'URL de l'image du comics
   searchMarvelCharacters(searchValue: string): Observable<MarvelData> {
     return this.dataService.searchMarvelByTitleComic(searchValue);
   }
 
-
+// Recherche des comics Marvel par nom
   onSearchChange() {
     const searchValue = this.searchCtrl.value;
     this.lastSearchValue = searchValue;
@@ -88,7 +95,7 @@ export class PageComponent implements OnInit {
     }
   }
   
-
+// Met à jour la liste des comics affichés en fonction de la pagination
   updateFilteredCharacters() {
     const startIndex = (this.currentPage - 1) * this.pageSize;
     const endIndex = startIndex + this.pageSize;
@@ -109,6 +116,8 @@ export class PageComponent implements OnInit {
       this.getMarvelDataAndUpdate();
     }
   }
+
+  // Récupérer de nouvelles données et mettre à jour les comics
   getMarvelDataAndUpdate() {
     const startIndex = (this.currentPage - 1) * this.pageSize;
     const endIndex = startIndex + this.pageSize;
