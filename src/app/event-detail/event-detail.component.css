@@ -77,9 +77,11 @@ li {
   color: #555;
 margin-top: 12%;
 margin-left: 30%;
+}
 
-
-
+.no-available-message {
+  font-size: 15px;
+  margin-bottom: 20px;
 }
 
 
