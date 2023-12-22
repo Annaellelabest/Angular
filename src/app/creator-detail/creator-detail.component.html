@@ -1,12 +1,9 @@
-<!-- character-detail.component.html -->
-
 <div *ngIf="selectedCreator">
+    <button (click)="goBack()">Back</button>
     <h2>{{ selectedCreator.fullName }}</h2>
     <img class="character"[src]="getThumbnailUrl(selectedCreator)" alt="{{ selectedCreator.fullName }} Thumbnail">
     <p>Description: {{ selectedCreator.description || 'No description available' }}</p>
     
-
-    <!-- Display comics  -->
     <h3>Characters</h3>
     <ul class="comic">
         <li *ngFor="let character of characters">
@@ -14,7 +11,6 @@
         </li>
     </ul>
 
-    <!-- Display creators  -->
     <h3>Events</h3>
     <ul class="comic">
         <li *ngFor="let event of events">
@@ -22,7 +18,6 @@
         </li>
     </ul>
 
-    <!-- Display comics  -->
     <h3>Comics</h3>
     <ul class="comic">
         <li *ngFor="let comic of comics">

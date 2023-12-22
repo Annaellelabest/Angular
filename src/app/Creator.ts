@@ -1,5 +1,3 @@
-
-
 export interface Creator {
     fullName: string;
     thumbnail: {

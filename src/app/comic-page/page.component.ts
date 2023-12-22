@@ -45,7 +45,6 @@ export class PageComponent implements OnInit {
       }
     );
 
-    // Subscribe to changes in the search input
     this.searchCtrl.valueChanges
       .pipe(
         debounceTime(300),
@@ -76,7 +75,7 @@ export class PageComponent implements OnInit {
       this.searchMarvelCharacters(searchValue).subscribe((data: MarvelData) => {
         this.allTitle = data.data.results;
         this.totalPages = Math.ceil(data.data.total / this.pageSize);
-        this.currentPage = 1;  // Assurez-vous que la page est réinitialisée à 1
+        this.currentPage = 1; 
         this.updateFilteredCharacters();
       });
     } else {

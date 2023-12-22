@@ -1,5 +1,4 @@
 <div *ngIf="serie">
-
     <h3 >{{ serie.title }}</h3>
     <a [routerLink]="['/series-detail', serie?.id]">
     <img [src]="getThumbnailUrl(serie)" alt="{{ serie.title }} Thumbnail" (click)="showNextImage()">

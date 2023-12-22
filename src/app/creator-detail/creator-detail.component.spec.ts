@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { CreatorDetailComponent } from './creator-detail.component';
 
 describe('CreatorDetailComponent', () => {

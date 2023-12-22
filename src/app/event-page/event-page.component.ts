@@ -44,7 +44,6 @@ export class EventPageComponent implements OnInit {
       }
     );
 
-    // Subscribe to changes in the search input
     this.searchCtrl.valueChanges
       .pipe(
         debounceTime(300),
@@ -60,9 +59,6 @@ export class EventPageComponent implements OnInit {
       });
   }
 
-
-
-
   searchMarvelCharacters(searchValue: string): Observable<MarvelData> {
     return this.dataService.searchMarvelByNameEvent(searchValue);
   }
@@ -75,7 +71,7 @@ export class EventPageComponent implements OnInit {
       this.searchMarvelCharacters(searchValue).subscribe((data: MarvelData) => {
         this.allTitle = data.data.results;
         this.totalPages = Math.ceil(data.data.total / this.pageSize);
-        this.currentPage = 1;  // Assurez-vous que la page est réinitialisée à 1
+        this.currentPage = 1; 
         this.updateFilteredCharacters();
       });
     } else {
@@ -116,10 +112,7 @@ export class EventPageComponent implements OnInit {
       data => {
         this.marvelData = data;
         const newResults = data.data.results;
-        
-        // Ajoutez les nouveaux résultats à la liste existante
         this.allTitle = this.allTitle.concat(newResults);
-  
         this.totalPages = Math.ceil(data.data.total / this.pageSize);
         this.updateFilteredCharacters();
       },

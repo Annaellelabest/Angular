@@ -10,13 +10,10 @@ import { Series } from '../Series';
 })
 export class SeriesComponent {
 
-
   @Input() serie: any | undefined;
   currentImageIndex: number = 0; // Initialize the index
   @Input() characters: MarvelSeries[] = [];
   @Input() series: Series[] = [];
-
-
 
   getThumbnailUrl(serie: MarvelSeries): string {
     return `${serie.thumbnail.path}.${serie.thumbnail.extension}`;

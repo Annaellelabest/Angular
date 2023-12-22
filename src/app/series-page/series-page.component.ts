@@ -7,7 +7,6 @@ import { MarvelData } from '../MarvelData';
 import { MarvelDataService } from '../data.services';
 
 
-
 @Component({
   selector: 'app-series-page',
   templateUrl: './series-page.component.html',
@@ -44,7 +43,6 @@ export class SeriesPageComponent {
       }
     );
 
-    // Subscribe to changes in the search input
     this.searchCtrl.valueChanges
       .pipe(
         debounceTime(300),
@@ -59,9 +57,6 @@ export class SeriesPageComponent {
         }
       });
   }
-
-
-
   
 
   searchMarvelCharacters(searchValue: string): Observable<MarvelData> {
@@ -76,7 +71,7 @@ export class SeriesPageComponent {
       this.searchMarvelCharacters(searchValue).subscribe((data: MarvelData) => {
         this.allTitle = data.data.results;
         this.totalPages = Math.ceil(data.data.total / this.pageSize);
-        this.currentPage = 1;  // Assurez-vous que la page est réinitialisée à 1
+        this.currentPage = 1; 
         this.updateFilteredCharacters();
       });
     } else {
@@ -89,7 +84,6 @@ export class SeriesPageComponent {
     }
   }
   
-
   updateFilteredCharacters() {
     const startIndex = (this.currentPage - 1) * this.pageSize;
     const endIndex = startIndex + this.pageSize;
@@ -118,10 +112,7 @@ export class SeriesPageComponent {
       data => {
         this.marvelData = data;
         const newResults = data.data.results;
-        
-        // Ajoutez les nouveaux résultats à la liste existante
         this.allTitle = this.allTitle.concat(newResults);
-  
         this.totalPages = Math.ceil(data.data.total / this.pageSize);
         this.updateFilteredCharacters();
       },

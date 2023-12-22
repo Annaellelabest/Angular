@@ -38,7 +38,6 @@ export class CreatorPageComponent {
       })
     );
 
-    // Subscribe to changes in the search input
     this.searchCtrl.valueChanges
       .pipe(
         debounceTime(300),

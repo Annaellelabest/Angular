@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { SeriesPageComponent } from './series-page.component';
 
 describe('SeriesPageComponent', () => {

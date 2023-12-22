@@ -1,6 +1,5 @@
-<!-- character-detail.component.html -->
-
 <div *ngIf="selectedSeries">
+    <button (click)="goBack()">Back</button>
     <h2>{{ selectedSeries.title }}</h2>
     <img class="character"[src]="getThumbnailUrl(selectedSeries)" alt="{{ selectedSeries.title }} Thumbnail">
     <p>Description: {{ selectedSeries.description || 'No description available' }}</p>
@@ -19,11 +18,7 @@
             <app-characters [character]="character"></app-characters>
         </li>
     </ul>
-
-
- 
-
-
+    
     <h3>Comics</h3>
     <ul class="comic">
         <li *ngFor="let comic of comics">

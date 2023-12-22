@@ -1,4 +1,3 @@
-/* styles.css */
 @font-face {
   font-family: 'Avenger Assemble';
   src: url('../../assets/AVENGER.ttf') format('truetype');
@@ -44,15 +43,15 @@ ul {
 
 li {
   display: inline-block;
-  margin-right: 100px; /* Increase the margin between li elements */
+  margin-right: 100px;
 }
 
 li a {
   display: block;
   color: #ffffff;
-  font-size: 24px; /* Increase the font size */
+  font-size: 24px; 
   text-align: center;
-  padding: 20px 16px; /* Increase the padding */
+  padding: 20px 16px;
   text-decoration: none;
   transition: background-color 0.3s, color 0.3s;
 }

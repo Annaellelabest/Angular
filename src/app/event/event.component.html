@@ -1,5 +1,4 @@
 <div *ngIf="event">
-
     <h3 >{{ event.title }}</h3>
     <a [routerLink]="['/event-detail', event?.id]">
     <img [src]="getThumbnailUrl(event)" alt="{{ event.title }} Thumbnail" (click)="showNextImage()">

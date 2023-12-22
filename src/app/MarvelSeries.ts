@@ -1,4 +1,3 @@
-
 export interface MarvelSeries {
     thumbnail: {
       path: string;

@@ -1,9 +1,9 @@
 img {
-    width: 100%; /* Set a fixed width */
-    height: 600px; /* Set a fixed height */
-    object-fit: cover; /* Preserve aspect ratio while covering the specified dimensions */
-    border-radius: 20px; /* Rounded corners */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.8); /* Shadow effect */
+    width: 100%;
+    height: 600px; 
+    object-fit: cover; 
+    border-radius: 20px; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.8); 
     transition: transform 0.3s ease-in-out;
   }
   

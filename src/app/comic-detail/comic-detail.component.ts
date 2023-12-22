@@ -1,7 +1,5 @@
-// character-detail.component.ts
-
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MarvelComic } from '../MarvelComic';
 import { Character } from '../Character';
 import { Creator } from '../Creator';
@@ -19,7 +17,7 @@ export class ComicDetailComponent implements OnInit {
   creators: Creator[] = [];
 
 
-  constructor(private route: ActivatedRoute, private marvelDetailServices: MarvelDetailServices) {}
+  constructor(private router:Router ,private route: ActivatedRoute, private marvelDetailServices: MarvelDetailServices) {}
 
   ngOnInit(): void {
     this.route.paramMap.subscribe((params) => {
@@ -57,5 +55,9 @@ export class ComicDetailComponent implements OnInit {
 
   getThumbnailUrl(comic: MarvelComic): string {
     return `${comic.thumbnail.path}.${comic.thumbnail.extension}`;
+  }
+
+  goBack() {
+    this.router.navigate(['/page']);
   }
 }

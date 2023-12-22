@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MarvelSeries } from '../MarvelSeries';
 import { Character } from '../Character';
 import { Comic } from '../Comic';
 import { Creator } from '../Creator';
 import { MarvelDetailServices } from '../detail.services';
-
 
 
 @Component({
@@ -20,7 +19,7 @@ export class SeriesDetailComponent implements OnInit {
   comics: Comic[] = [];
   creators: Creator[] = [];
 
-  constructor(private route: ActivatedRoute, private marvelDetailServices: MarvelDetailServices) {}
+  constructor(private router: Router, private route: ActivatedRoute, private marvelDetailServices: MarvelDetailServices) {}
 
   ngOnInit(): void {
     this.route.paramMap.subscribe((params) => {
@@ -65,9 +64,11 @@ export class SeriesDetailComponent implements OnInit {
     });
   }
 
-
   getThumbnailUrl(comic: MarvelSeries): string {
     return `${comic.thumbnail.path}.${comic.thumbnail.extension}`;
+  }
+  goBack() {
+    this.router.navigate(['/series']);
   }
 
   

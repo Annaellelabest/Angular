@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MarvelCharacter } from '../MarvelCharacter';
 import { Comic } from '../Comic';
 import { Series } from '../Series';
 import { MarvelDetailServices } from '../detail.services';
+
 
 
 
@@ -19,7 +20,7 @@ export class CharacterDetailComponent implements OnInit {
   series: Series[] = [];
   events: Event[] = [];
 
-  constructor(private route: ActivatedRoute, private marvelDetailServices: MarvelDetailServices) {}
+  constructor(private router: Router, private route: ActivatedRoute, private marvelDetailServices: MarvelDetailServices) {}
 
   ngOnInit(): void {
     this.route.paramMap.subscribe((params) => {
@@ -69,4 +70,9 @@ export class CharacterDetailComponent implements OnInit {
   getThumbnailUrl(character: MarvelCharacter): string {
     return `${character.thumbnail.path}.${character.thumbnail.extension}`;
   }
+
+  goBack() {
+    this.router.navigate(['/marvel']);
+  }
+
 }

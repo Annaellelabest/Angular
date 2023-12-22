@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { ComicComponent } from './comic.component';
 
 describe('ComicComponent', () => {

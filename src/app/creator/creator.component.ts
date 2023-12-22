@@ -2,8 +2,6 @@ import { Component,Input } from '@angular/core';
 import { MarvelCreator } from '../MarvelCreator';
 import { Creator } from '../Creator';
 
-
-
 @Component({
   selector: 'app-creator',
   templateUrl: './creator.component.html',
@@ -12,7 +10,7 @@ import { Creator } from '../Creator';
 export class CreatorComponent {
 
   @Input() creator: any | undefined;
-  currentImageIndex: number = 0; // Initialize the index
+  currentImageIndex: number = 0; 
   @Input() characters: MarvelCreator[] = [];
   @Input() creators: Creator[] = [];
 
@@ -36,11 +34,8 @@ showNextImage() {
     while (nextIndex !== this.currentImageIndex && !this.shouldDisplayThumbnail(this.characters[nextIndex])) {
       nextIndex = (nextIndex + 1) % this.characters.length;
     }
-
-    // Update the current index and check if we have an image to display
     this.currentImageIndex = nextIndex;
 
-    // If there's still no valid thumbnail, move to the next image
     if (!this.shouldDisplayThumbnail(this.characters[this.currentImageIndex])) {
       this.showNextImage();
     }
